@@ -81,6 +81,12 @@ const initializePassport = () => {
             //aqui indico que email es el username.
             //LA ESTRATEGIA LOCAL NECESITA UN USERNAME Y YO LE ESPECIFICO QUE LO QUE SERIA EL REQUEST BODY DE MI CONSULTA VA A SER EL EMAIL. EN ESTE CASO USERNAME Y EMAIL REPRESENTAN LO MISMO. PASSWORD SIGUE COMO PASSWORD, NO CAMBIA
             if (user && validatePassword(password, user.password)) {
+                //cuando me logueo Si el usuario es valido aqui actaulizo ese usuario (desafio 4ª practica integradora)
+                //atributo last_connection  para que cada vez que se loguea agregar  la hora y fecha actual
+               user.last_connection = new Date()//→consulto dentro del login
+               //guardo la ultima coneccion
+               await user.save()
+
                 return done(null, user)
             } else {
                 return done(null, false)

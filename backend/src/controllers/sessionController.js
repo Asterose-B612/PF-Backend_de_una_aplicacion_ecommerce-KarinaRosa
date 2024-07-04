@@ -35,6 +35,7 @@ export const login = async (req, res) => {
 
 
 
+
 // inicio CURRENT: verificación de logueo de usuario....................
 
 // Función asíncrona para verificar si el usuario está autenticado utilizando la estrategia JWT.
@@ -92,8 +93,15 @@ export const register = async (req, res) => {
 
 // inicio LOGOUT (desloguearse: cerrar sesion)....................
 
+//ADEMAS DE DESTRUIR LA SESION PUEDO LLAMAR AL MODULO de userModel (desafio 4ºpractica integradora)
+
 //Función asíncrona para cerrar sesión de un usuario.
 export const logout = async (req, res) => {
+console.log(req.session)
+/*const user= await  userModel.findById(req.session.user._id)
+user.last_connection= new Date()
+await user.save()*/
+
     // Destruye la sesión del usuario.
     req.session.destroy(function (e) {
         if (e) {

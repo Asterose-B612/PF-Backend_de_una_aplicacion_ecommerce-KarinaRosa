@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers } from "../controllers/userController.js";
+import { getUsers, sendDocuments } from "../controllers/userController.js";
 
 
 /*crea un enrutador en Express.js para manejar las solicitudes relacionadas con las operaciones de usuario en la aplicación web.*/
@@ -13,6 +13,6 @@ const userRouter = Router()
 //ruta get para obtener todos los usuarios en la ruta inicial /
 userRouter.get('/', getUsers)
 
-
+userRouter.post('/:uid/documents', sendDocuments)
 
 export default userRouter

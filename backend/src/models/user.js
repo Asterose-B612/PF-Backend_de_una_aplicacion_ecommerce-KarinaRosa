@@ -39,7 +39,17 @@ const userSchema = new Schema({
         default: "User"
     },
 
+    //aqui voy a ingresar los documentos
+    documents: {
+        type: Object,
+        default: []
+    },
+//ultima conexion de logueo y deslogueo
+    last_connection: {
+        type: Date
+    },
 
+//esto tiene que ver con handlebars o algo de algun desafio para la visualizacion del front que daba error.
     isLoggedIn: {
         type: Boolean, 
         default: false
