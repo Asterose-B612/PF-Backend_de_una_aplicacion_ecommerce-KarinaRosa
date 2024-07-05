@@ -97,10 +97,10 @@ export const register = async (req, res) => {
 
 //Función asíncrona para cerrar sesión de un usuario.
 export const logout = async (req, res) => {
-console.log(req.session)
-/*const user= await  userModel.findById(req.session.user._id)
-user.last_connection= new Date()
-await user.save()*/
+    console.log(req.session)
+    /*const user= await  userModel.findById(req.session.user._id)
+    user.last_connection= new Date()
+    await user.save()*/
 
     // Destruye la sesión del usuario.
     req.session.destroy(function (e) {

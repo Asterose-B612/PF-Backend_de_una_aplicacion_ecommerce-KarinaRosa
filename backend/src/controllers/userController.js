@@ -50,19 +50,21 @@ export const sendDocuments = async (req, res) => {
         const user = await userModel.findByIdAndUpdate(uid, {
 
             $push: {
+                //pusheo dentro del array de documentos
                 documents: {
+                    //con el each voy recorriendo cada uno de estos nuevos documentos y por cada uno lo voy pusheando
                     $each: newDocs
                 }
             }
-            //new en true me devuelve que cuando consulto por el usuario, lo que haga sea devolverme el usuario actualizado
+            //como estoy consultando a la base de datos agrego el atributo new
+            //new en true→ lo que hace es que cuando consulto por el usuario, me devuelve el usuario actualizado y me lo devuelve debajo en else↓ (res.status(200).send(user))
         }, { new: true })
-        //me devuelve un usuario
         if (!user) {
             //si no existe
             res.status(404).send("User no existe")
             //si existe puedo ir guardando esta informacion en el nuevo array
         } else {
-            //envio el usuario actualizado con los ultimos cambios. Los documentos agregados
+            //envio el usuario actualizado con los "ultimos cambios"→ Los documentos agregados
             res.status(200).send(user)
         }
     } catch (e) {
