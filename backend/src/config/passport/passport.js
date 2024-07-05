@@ -51,10 +51,6 @@ const initializePassport = () => {
         }
     }))
 
-
-
-
-
     //ESTRATEGIAS DE LOGUEO
 
     //APARTE PARA IMPLEMENTAR LAS SESONES DE LOS USUARIOS VOY A TRABAJAR CON 2 FUNCIONES, PARA AGREGAR O ELIMINAR LAS SESIONES:
@@ -79,7 +75,9 @@ const initializePassport = () => {
     passport.use('login', new localStrategy({ usernameField: 'email' }, async (username, password, done) => {
         //username representa al email y password a la contraseña
         try {
-            const user = await userModel.findOne({ email: username }).lean()
+            const user = await userModel.findOne({ email: username })
+            //.lean()
+            console.log(user)
             //aqui indico que email es el username.
             //LA ESTRATEGIA LOCAL NECESITA UN USERNAME Y YO LE ESPECIFICO QUE LO QUE SERIA EL REQUEST BODY DE MI CONSULTA VA A SER EL EMAIL. EN ESTE CASO USERNAME Y EMAIL REPRESENTAN LO MISMO. PASSWORD SIGUE COMO PASSWORD, NO CAMBIA
             if (user && validatePassword(password, user.password)) {
