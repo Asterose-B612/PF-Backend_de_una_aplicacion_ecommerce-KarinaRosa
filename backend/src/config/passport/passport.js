@@ -1,8 +1,10 @@
 //importo la estrategia local
 import local from 'passport-local'
 import passport from 'passport'
-import crypto from 'crypto'
-import GithubStrategy from 'passport-github2'
+
+//import crypto from 'crypto'
+//import GithubStrategy from 'passport-github2'
+
 //cuando estoy trabajando con estrategia local importo userModel, consulto usuarios (user.js)
 import { userModel } from '../../models/user.js'
 //importo bcrypt (el hasheo y validacion)

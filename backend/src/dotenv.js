@@ -7,7 +7,7 @@ const varenv = {
     cookies_secret: process.env.COOKIES_SECRET,
     session_secret: process.env.SESSION_SECRET,
     jwt_secret: process.env.JWT_SECRET,
-    salt: process.env.SALT
+    salt: parseInt(process.env.SALT, 12)
 }
 
 export default varenv;
