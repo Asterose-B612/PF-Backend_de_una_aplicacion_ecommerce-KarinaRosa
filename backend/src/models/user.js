@@ -50,10 +50,10 @@ const userSchema = new Schema({
     },
 
 //esto tiene que ver con handlebars o algo de algun desafio para la visualizacion del front que daba error.
-    isLoggedIn: {
+  /*  isLoggedIn: {
         type: Boolean, 
         default: false
-      },
+      },*/
 
       cart_id: {
         type: Schema.Types.ObjectId,
@@ -98,3 +98,7 @@ userSchema.pre('find', async function (next) {
 
 //exporto una constante que va a ser igual a este modelo de nombre users y el siguiente esquema: userSchema
 export const userModel = model("users", userSchema)
+
+/*opción 2:  Exportar userModel como default
+const userModel = model("users", userSchema);
+export default userModel;*/

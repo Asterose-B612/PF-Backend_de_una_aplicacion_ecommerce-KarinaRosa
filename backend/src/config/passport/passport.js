@@ -85,6 +85,7 @@ const initializePassport = () => {
                 //atributo last_connection  para que cada vez que se loguea agregar  la hora y fecha actual
                user.last_connection = new Date()//→consulto dentro del login
                //guardo la ultima coneccion→ si el usuario es válido lo voy a actualizar. 
+              /* user.last_connection.toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });*/
                await user.save()
 
                 return done(null, user)

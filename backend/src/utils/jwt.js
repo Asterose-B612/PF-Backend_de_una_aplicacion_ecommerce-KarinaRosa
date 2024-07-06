@@ -9,10 +9,12 @@ export const generateToken = (user) => {
         3°: Tiempo de expiracion
     */
    //genero un token el cual recibe como parámetro un usuario, lo encripte con el Secret Key, la contraseña, y dure 12  horas. 
-    const token = jwt.sign({ user }, varenv.jwt_secret, { expiresIn: '12h' })
+    const token = jwt.sign({ user }, "coderhouse", { expiresIn: '12h' })
    return token
 }
 
+//varenv.jwt_secret
+/*
 // Ejemplo de uso y prueba
 console.log(generateToken({
     "_id": "65fb7dbb4c863f6027e6da4b",
@@ -23,4 +25,4 @@ console.log(generateToken({
     "email": "adminCoder@coder.com",
     "rol": "User",
     "__v": 0
-}))
+}))*/

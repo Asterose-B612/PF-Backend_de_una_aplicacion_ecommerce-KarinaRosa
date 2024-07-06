@@ -1,5 +1,6 @@
 // Importa el módulo 'passport' que se utiliza para la autenticación de usuarios.
 import passport from "passport";
+import { userModel } from "../models/user.js";// Utiliza destructuración para importar
 
 
 
@@ -17,7 +18,7 @@ export const login = async (req, res) => {
         // Establece la información del usuario en la sesión.
         req.session.user = {
             email: req.user.email,
-            first_name: req.user.first_name
+           name: req.user.name
         }
 
         // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha logueado correctamente.
@@ -97,10 +98,14 @@ export const register = async (req, res) => {
 
 //Función asíncrona para cerrar sesión de un usuario.
 export const logout = async (req, res) => {
-    console.log(req.session)
-    /*const user= await  userModel.findById(req.session.user._id)
+       console.log(req.session)
+       //voy a buscar a 1 usuario
+    const user= await userModel.findOne({email: req.session.user.email})
+    //realiza una búsqueda en la base de datos MongoDB utilizando Mongoose para encontrar un documento que coincida con un criterio específico. En este caso, el criterio es el campo `email` que debe coincidir con el valor almacenado en `req.session.user.email`.
+    //findOne({email: req.session.user.email})
+    //.findById(req.session.user._id)
     user.last_connection= new Date()
-    await user.save()*/
+    await user.save()
 
     // Destruye la sesión del usuario.
     req.session.destroy(function (e) {
