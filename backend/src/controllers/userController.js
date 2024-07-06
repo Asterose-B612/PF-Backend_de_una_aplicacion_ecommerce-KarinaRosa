@@ -12,7 +12,6 @@ export const getUsers = async (req, res) => {
     } catch (e) {
         res.status(500).send("Error al consultar usuarios", e)
     }//capturo error con catch 
-
 }
 
 
@@ -72,3 +71,19 @@ export const sendDocuments = async (req, res) => {
     }
 }
 // fin ENVIO DOCUMENTOS .........................
+
+
+
+
+
+
+// inicio CARGA DE IMAGENES .........................
+
+export const imageProds = (req, res)=> {
+
+    //
+}
+
+
+
+// fin CARGA DE IMAGENES .........................

@@ -13,6 +13,8 @@ const userRouter = Router()
 //ruta get para obtener todos los usuarios en la ruta inicial /
 userRouter.get('/', getUsers)
 
+
 userRouter.post('/:uid/documents', sendDocuments)
+
 
 export default userRouter
