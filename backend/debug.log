@@ -404,3 +404,10 @@ info: Metodo: GET en ruta /api/session/login - 6/7/2024 00:12:23
 info: Metodo: GET en ruta /api/session/logout - 6/7/2024 00:12:35
 info: Metodo: GET en ruta / - 6/7/2024 00:12:35
 info: Metodo: GET en ruta /api/session/logout - 6/7/2024 00:13:19
+info: Metodo: GET en ruta /api/session/login - 6/7/2024 00:14:07
+info: Metodo: GET en ruta /api/session/login - 6/7/2024 00:15:42
+info: Metodo: GET en ruta /api/session/logout - 6/7/2024 00:16:27
+info: Metodo: GET en ruta / - 6/7/2024 00:16:27
+info: Metodo: POST en ruta /api/users/66889449bfbc3332db5804e6/documents - 6/7/2024 01:23:59
+info: Metodo: POST en ruta /api/users/66889449bfbc3332db5804e6/documents - 6/7/2024 01:24:05
+info: Metodo: POST en ruta /api/users/66889449bfbc3332db5804e6/documents - 6/7/2024 01:28:08
