@@ -18,7 +18,7 @@ import initializePassport from './config/passport/passport.js'
 //esta importando basicamente el config.
 import varenv from './dotenv.js';
 import { __dirname } from './path.js'
-import { engine } from 'express-handlebars'
+//import { engine } from 'express-handlebars'
 import { Server } from 'socket.io' //llaves es una dependencia
 import { generateRandomProducts } from './controllers/productController.js';//importo la función generateRandomProducts desde productController.js
 import { generateRandomUsers } from './controllers/userController.js';//importo la función generateRandomUsers desde userController.js
@@ -207,7 +207,7 @@ app.use(session({
   saveUninitialized: true
 }))
 
-
+/*
 
 //......CON ESTO CONFIGURO HANDLEBARS.....
 
@@ -221,7 +221,7 @@ app.set('view engine', 'handlebars')
 //CON ESTO INDICO DONDE SE ESTA UTILIZANDO
 app.set('views', __dirname + '/views')
 //las vistas de mi aplicacion se encuentran en __dirname es mi path →seria la carpeta src y lo concateno con la carpeta views
-
+*/
 
 
 

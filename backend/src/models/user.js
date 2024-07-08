@@ -36,7 +36,8 @@ const userSchema = new Schema({
     //rol→ creado por defecto cada vez que se ingrese un usuario
     rol: {
         type: String,
-        default: "User"
+        default: "User",
+        required: true
     },
 
     //aqui voy a ingresar los documentos

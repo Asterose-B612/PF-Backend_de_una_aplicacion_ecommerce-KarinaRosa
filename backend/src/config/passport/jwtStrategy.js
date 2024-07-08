@@ -17,7 +17,7 @@ const cookieExtractor = req => {
     return token
 }
 
-
+//ESTO ES LO QUE ME SALE POR CONSOLA: CODERHOUSE
 console.log(varenv.jwt_secret)
 /*****STRATEGY OF JWT***** */
 
@@ -30,7 +30,7 @@ const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     //jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() esperar el token de JWT desde la peticion
     //jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]) consultando desde las cookies
-    secretOrKey: varenv.jwt_secret
+    secretOrKey: varenv.secret_Key
 }
 
 
