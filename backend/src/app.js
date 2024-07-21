@@ -305,7 +305,7 @@ app.post('/login', (req, res) => {
   //consulto email y contraseña
   const { email, password } = req.body
   //Simulacion que tengo una Base de datos como tal.
-  if (email == "decoracion@gmail.com" && password == "265444") {
+  if (email == email && password == password) {
     //si se cumple me pude loguear
     //entonces guardo la session en mi servidor estos valores:
     req.session.email = email

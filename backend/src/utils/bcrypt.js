@@ -16,13 +16,17 @@ import varenv from '../dotenv.js'
 
 
 
-
+/*
 export const createHash = (password) => {
     const saltRounds = varenv.salt; // Asegúrarse de que este valor sea un número
     const salt = bcrypt.genSaltSync(saltRounds);
-    return bcrypt.hashSync(password, salt);
-};
-/*Codigo suplantado: export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(varenv.salt))*/
+    return bcrypt.hashSync(password, salt);/*
+};*/
+
+
+//bcrypt.genSaltSync(varenv.salt): Genera un salt con el número de rondas especificado por varenv.salt. En este caso, varenv.salt debería ser un número entero (como 12) que define cuántas rondas de hashing se aplican.
+//bcrypt.hashSync(password, salt): Hashea la contraseña usando el salt generado.
+ export const createHash = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(varenv.salt))
 
 
 
@@ -40,6 +44,7 @@ export const createHash = (password) => {
 //2- es VALIDAD CONTRASEÑA
 
 //En parametros ingreso (contraseña enviada x usuario sin encriptar, contraseña encriptada de la BDD) => comparo la cotraseña que me enviaron con .comprareSync
+//bcrypt.compareSync(passwordSend, passwordBdd): Compara una contraseña sin encriptar con una encriptada almacenada para verificar la autenticidad.
 export const validatePassword = (passwordSend, passwordBdd) => bcrypt.compareSync(passwordSend, passwordBdd)
 
 

@@ -1,0 +1,175 @@
+/* Reset general y configuración básica */
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    background: rgb(220, 220, 220);
+    color: #cccbcb;
+    /* Color gris claro para el texto */
+    text-align: center;
+
+}
+
+/* Estilos del encabezado y navegación */
+.header_inicio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    background: linear-gradient(to right, rgb(23, 8, 0), rgb(4, 9, 22));
+}
+
+.circle-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 0.2rem solid rgba(255, 182, 193, 0.6);
+    background-color: #1e1e1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 10px;
+    box-shadow: 0 0 1rem 0.5rem rgba(255, 255, 255, 0.5);
+    animation: glow 2s infinite alternate;
+}
+
+.circle h2 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: rgba(255, 182, 193, 0.6);
+    font-weight: 300;
+    text-shadow: 0 0 1rem rgba(255, 255, 255, 0.8);
+}
+
+.text {
+    font-size: 1rem;
+    color: rgb(218, 208, 208);
+}
+
+
+/*
+MOVIMIENTO DEL CIRCULO
+    @keyframes glow {
+        from {
+            box-shadow: 0 0 1rem 0.3rem rgba(255, 255, 255, 0.3);
+        }
+        to {
+            box-shadow: 0 0 2rem 1rem rgba(255, 255, 255, 0.6);
+        }
+    }
+*/
+
+
+#btnConocenos {
+    padding: 0.5rem 1rem;
+    border: 0.01rem solid rgba(80, 80, 80, 0.6);
+    border-radius: 1rem;
+    background-color: rgb(39, 36, 38);
+    color: rgba(255, 247, 248, 0.6);
+    font-size: 0.8rem;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 0.1em;
+}
+
+#btnConocenos:hover {
+    background-color: rgba(255, 182, 193, 0.2);
+    transform: scale(1.1);
+    /* Efecto de escala al hacer hover */
+    color: rgba(255, 255, 255, 0.6);
+    border-color: transparent;
+}
+
+
+#logo {
+    font-size: 1.5rem;
+    align-items: center;
+}
+
+#logo h3 {
+    margin: 0;
+    font-weight: 3rem;
+    text-shadow:
+        0 0 10px rgba(249, 248, 248, 0.5),
+        /* Blanco con transparencia */
+        0 0 20px rgba(255, 255, 255, 0.5),
+        /* Blanco con transparencia */
+        0 0 30px rgba(255, 255, 255, 0.5),
+        /* Blanco con transparencia */
+        0 0 40px #ff00de,
+        /* Tono rosa */
+        0 0 50px #ff00de,
+        0 0 60px #ff00de,
+        0 0 70px #ff00de;
+}
+
+#logo a {
+    text-decoration: none;
+    color: inherit;
+}
+#navbar {
+    background: 
+        linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+    background-color: #1e1d1e; /* Color de fondo base */
+    background-size: 10px 10px; /* Tamaño del patrón */
+    height: 3rem; /* Ajuste de altura para mayor visibilidad */
+    padding-bottom: 0.2rem;
+    padding-top: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.5); /* Sombra en la parte inferior más difusa y ancha */
+}
+
+
+.navbar__links {
+    display: flex;
+    gap: 2rem;
+    justify-content: flex-end;
+    padding: 1rem;
+    font-weight: bold;
+}
+
+.navbar__links a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    color: rgb(218, 186, 186);
+    
+    
+}
+
+.navbar__links a:hover {
+   
+    /* Color rosa pálido al hacer hover */
+    color: rgb(228, 197, 197);
+  
+}
+
+#cart {
+    color: rgb(228, 197, 197);
+    /* Tamaño del ícono del carrito */
+     font-size: 30px; 
+    
+
+}
+
+#cart:hover {
+    color: #fcfcfc; /* Color del ícono del carrito al hacer hover (puedes cambiar este color) */
+    transform: scale(1.2); 
+    
+}

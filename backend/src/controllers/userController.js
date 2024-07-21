@@ -78,18 +78,20 @@ export const sendDocuments = async (req, res) => {
         //consulto el modelo. Aca tomamos como válido de que el usuario existe xq tengo que cargar documentacion de un usuario que exista. Porque 1° creo el usuario y luego la documentacion.
         //findByIdAndUpdate lo uso porque es un metodo PUT . actualizo la informacion. Es un metodo post pero se da tambien como metodo put. Es algo raro 
         //metodo each de Mongo DB para hacer el recorrido del array.
+        //ACA DOY POR VALIDO QUE EL USUARIO EXISTE, ya que tengo que cargar la documentacion
         const user = await userModel.findByIdAndUpdate(uid, {
-
+//METODO DE MONGO DB:OUSH
             $push: {
                 //pusheo dentro del array de documentos
                 documents: {
-                    //con el each voy recorriendo cada uno de estos nuevos documentos y por cada uno lo voy pusheando
+                    //METODO DE MONGO DB: each voy recorriendo cada uno de estos nuevos documentos y por cada uno lo voy pusheando
                     $each: newDocs
                 }
             }
             //como estoy consultando a la base de datos agrego el atributo new
             //new en true→ lo que hace es que cuando consulto por el usuario, me devuelve el usuario actualizado y me lo devuelve debajo en else↓ (res.status(200).send(user))
         }, { new: true })
+        
         if (!user) {
             //si no existe
             res.status(404).send("User no existe")

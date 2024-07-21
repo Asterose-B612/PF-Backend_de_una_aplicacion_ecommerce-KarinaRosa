@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
-import { login, register, sessionGithub,current, logout, testJWT } from "../controllers/sessionController.js";
-
+import { login, register, sessionGithub,current, logout, testJWT, sendEmailPassword, changePassword } from "../controllers/sessionController.js";
+//sendEmailPassword, changePassword
 
 
 // Crea un enrutador en Express.js para manejar las solicitudes relacionadas con las operaciones de usuario en la aplicación web.
@@ -22,7 +22,11 @@ sessionRouter.get('/login', passport.authenticate('login'), login)
 
 // inicio REGISTRO....................
 
-sessionRouter.post('/register', passport.authenticate('register'), register)
+//passport.authenticate: Esta función de Passport se utiliza para autenticar solicitudes. Toma el nombre de una estrategia de Passport como primer argumento y opciones adicionales como segundo argumento.
+//'register': nombre de la estrategia de autenticación local Passport que definí para el registro de usuarios.
+//{ session: false }: Es una opción que indica que no se debe crear ni mantener una sesión para la autenticación de esta solicitud.  Esto es útil en contextos como el registro, donde no necesitas mantener una sesión persistente después de que el usuario se ha registrado. Es común en las solicitudes de API donde se prefieren tokens (como JWT) en lugar de sesiones tradicionales.
+//Esto es típico en el registro, ya que el objetivo principal es crear una cuenta y no autenticar al usuario para una sesión persistente.
+sessionRouter.post('/register', passport.authenticate('register', { session: false }), register)
 
 // fin REGISTRO....................
 
@@ -81,6 +85,17 @@ sessionRouter.get('/logout', logout);
 sessionRouter.get('/testJWT', passport.authenticate('jwt', { session: false }), testJWT)
 
 // fin RUTA JWT....................
+
+
+
+
+sessionRouter.post('/sendEmailPassword',sendEmailPassword)
+
+
+
+
+sessionRouter.post('/reset-password/:token', changePassword)
+
 
 
 

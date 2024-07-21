@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ecommerce de productos tecnológicos">
+    <meta name="keywords"
+        content="ECOMMERCE, GERHARD, LAPTOPS, SMARTPHONES, TABLETS, TECNOLOGÍA, PRODUCTOS ELECTRÓNICOS, GADGETS, DISPOSITIVOS MÓVILES, PORTÁTILES, ACCESORIOS TECNOLÓGICOS, TIENDA ONLINE, COMPRAR TECNOLOGÍA, ÚLTIMAS NOVEDADES EN TECNOLOGÍA">
+    <title>Gerhard</title>
+    
+    <!-- Js general -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./register.css">
+</head>
+
+<body>
+    <div class="register-container">
+        <div class="logo">
+            <h1>Gerhard</h1>
+        </div>
+        <form id="registerForm" class="register-form">
+            <h2>Register</h2>
+            <input id="name" type="text" placeholder="name" required>
+            <input id="surname" type="text" placeholder="Surname" required>
+            <input id="age" type="number" placeholder="Age" required>  <!-- Corregido placeholder y type -->
+            <input id="email" type="email" placeholder="Email" required>
+            <input id="password" type="password" placeholder="Password" required> <!-- Corregido placeholder y type -->
+            <button id="btn_register" type="submit">Register</button>
+            <p>Already have an account? <a href="../login/login.html">Login</a></p>
+        </form>
+    </div>
+
+    <script src="./register.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

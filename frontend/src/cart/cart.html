@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="./cart.css">
+</head>
+
+<body>
+    <header>
+        <!-- Barra de navegación -->
+        <nav>
+            <ul>
+                <li><a href="../inicio/inicio.html">Inicio</a></li>
+                <li><a href="../cart/cart.html" class="active">Carrito</a></li>
+                <li><a href="../checkout/checkout.html">Checkout</a></li>
+                <li><a href="../contact/contact.html">Contacto</a></li>
+                <li><a href="../aboutAs/aboutAs.html">Nosotros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cart-items">
+            <h2>Carrito de Compras</h2>
+            <div class="cart-item">
+                <div class="item-image">
+                    <img src="product1.jpg" alt="Producto 1">
+                </div>
+                <div class="item-details">
+                    <h3>Nombre del Producto</h3>
+                    <p>Descripción corta del producto.</p>
+                    <p>Precio: $100.00</p>
+                    <input type="number" value="1" min="1">
+                    <button class="btn-remove">Eliminar</button>
+                </div>
+            </div>
+
+            <!-- Repite este bloque para cada producto en el carrito -->
+
+        </section>
+
+        <section class="cart-summary">
+            <h2>Resumen del Carrito</h2>
+            <div class="summary-details">
+                <p>Subtotal: $100.00</p>
+                <p>Envío: $10.00</p>
+                <p>Total: $110.00</p>
+            </div>
+            <button class="btn-proceed">Proceder al Checkout</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Gerhard. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="./cart.js"></script>
+</body>
+
+</html>

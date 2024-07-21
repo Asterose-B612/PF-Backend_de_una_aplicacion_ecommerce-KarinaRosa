@@ -1,0 +1,135 @@
+body {
+    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 0.5rem 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    header h1 {
+        margin-top: 3rem;
+        font-size: 2rem;
+        font-size: 3rem;
+        text-shadow:
+            0 0 0.625rem rgba(249, 248, 248, 0.5),
+            0 0 1.25rem rgba(255, 255, 255, 0.5),
+            0 0 1.875rem rgba(255, 255, 255, 0.5),
+            0 0 2.5rem #ff00de,
+            0 0 3.125rem #ff00de,
+            0 0 3.75rem #ff00de,
+            0 0 4.375rem #ff00de;
+    }
+}
+
+nav {
+    background-color: #1e1e1e;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #ff69b4;
+    border-radius: 0.3125rem;
+}
+
+.cart-icon {
+    width: 24px;
+    height: 24px;
+}
+
+main {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contacto-info, .contacto-formulario {
+    margin-bottom: 2rem;
+}
+
+h2 {
+    color: #ff69b4;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+p, label {
+    margin: 0 0 1rem 0;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3125rem;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #ff69b4;
+    border: none;
+    border-radius: 0.3125rem;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff1493;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 0.5rem 0;
+    }
+}

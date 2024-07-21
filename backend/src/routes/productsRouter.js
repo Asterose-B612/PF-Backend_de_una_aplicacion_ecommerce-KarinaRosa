@@ -40,7 +40,8 @@ productsRouter.get('/:pid', getProduct)
 
 // inicio CREAR PRODUCTO .........................
 
-productsRouter.post('/', passport.authenticate('jwt', { session: false }), createProduct)
+//productsRouter.post('/', passport.authenticate('jwt', { session: false }), createProduct)
+productsRouter.post('/', createProduct)
 
 
 // fin CREAR PRODUCTO .........................

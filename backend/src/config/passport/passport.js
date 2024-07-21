@@ -21,25 +21,32 @@ const initializePassport = () => {
 
     //ESTRATEGIAS DE REGISTRO
 
-    passport.use('register', new localStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => { //llamo a la estrategia register, que va a implementar la estrategia local
+    //passReqToCallback: true: Permite que el callback de la estrategia reciba el objeto req, lo que es útil para acceder a los datos del cuerpo de la solicitud.
+    //usernameField: 'email': Especifico email en el cuerpo de la solicitud se usará como el "nombre de usuario" para esta estrategia. En este caso, el "nombre de usuario" es en realidad el correo electrónico.
+    passport.use('register', new localStrategy({ passReqToCallback:
+         true, usernameField: 'email' }, async (req, username, password, done) => { //llamo a la estrategia register, que va a implementar la estrategia local
         //local strategies trabaja por defecto con user.name y password. En este caso no tengo un user,name, tenemos un email:Por lo cual definimos en usernameField que va a ser un email. Lo que va a simplificar la tarea de poderme registrar va a ser el email.
         //username seria mi email
         //password es la contraseña
 
         //consulto del req.body lo mismo que /register en sessionRouter.js. Lo copio y pego.
+        //EXTRAE LOS DATOS DEL CUERPO DE LA SOLICITUD
         try {
             const { name, surname, password, age, email } = req.body
+            // Verifica si ya existe un usuario con el mismo correo electrónico
             const findUser = await userModel.findOne({ email: email })
 
             if (findUser) {
                 //busco un usuario. Devuelvo un done en vez de un estatus como lo hicimos en el sessionRouter
-                //done va a ser mi retorno/return  
+                //done va a ser mi retorno/return 
+                // Si el usuario ya existe, retorna falso 
                 return done(null, false)
                 /*EL DONE MANEJA SOLO ESOS 2 VALORES.SI: existe algun error?Ninguno, entonces → null.
                El usuario lo pude registrar correctamente? No → entonces false.
                SI EXISTE EL USUARIO NO LO PUEDO REGISTRAR*/
             } else {
                 //guardo en variable el usuario para luego usar el valor
+                 // Si el usuario no existe, crea un nuevo usuario
                 const user = await userModel.create({ name: name, surname: surname, password: createHash(password), age: age, email: email })
                 return done(null, user)
                 //Aqui voy a poder generar mi usuario por lo cual retorno null y true. True xq pude crear a mi usuario.
@@ -83,10 +90,10 @@ const initializePassport = () => {
             if (user && validatePassword(password, user.password)) {
                 //cuando me logueo Si el usuario es valido aqui actaulizo ese usuario (desafio 4ª practica integradora)
                 //atributo last_connection  para que cada vez que se loguea agregar  la hora y fecha actual
-               user.last_connection = new Date()//→consulto dentro del login
-               //guardo la ultima coneccion→ si el usuario es válido lo voy a actualizar. 
-              /* user.last_connection.toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });*/
-               await user.save()
+                user.last_connection = new Date()//→consulto dentro del login
+                //guardo la ultima coneccion→ si el usuario es válido lo voy a actualizar. 
+                /* user.last_connection.toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });*/
+                await user.save()
 
                 return done(null, user)
             } else {
@@ -104,53 +111,53 @@ const initializePassport = () => {
 
     //ESTRATEGIA DE GITHUB
 
-/*
-NOTA: ESTA ESTRATEGIA SE COMENTO DEBIDO A UN ERROR EN POSTMAN AL TESTEAR LA ESTRATEGIA DE JWT, YA QUE SE DEBE INGRESAR LA CLAVE: clientID Y clientSecret. PARA QUE FUNCIONE SE DEBE COLOCAR LAS CLAVES.
-
-
-
-
-
-// Declara una estrategia de autenticación para la autenticación mediante GitHub, con el nombre "github"
-//github es el nombre de mi estrategia
-passport.use('github', new GithubStrategy({
-    // Configura el ID de cliente de la aplicación GitHub.
-    clientID: "",
-    // Configura la clave secreta del cliente de la aplicación GitHub.
-    clientSecret: "",
-    // Configura la URL de devolución de llamada para la autenticación.
-    callbackURL: "http://localhost:8000/api/session/githubSession"
-}, async (accessToken, refreshToken, profile, done) => {
-    //done es lo que voy a retornar
-    try {
-        console.log(accessToken)
-        console.log(refreshToken)
-        //LOGUEO DE USUARIO
-        // Busca un usuario en la base de datos por su correo electrónico obtenido de la información del perfil.
-        const user = await userModel.findOne({ email: profile._json.email }).lean()
-        // Si se encuentra un usuario, pasa el control al siguiente middleware con el usuario autenticado.
-        if (user) {
-            done(null, user)
-        } else {
-            // Genera un número aleatorio único.
-            const randomNumber = crypto.randomUUID()
-            // Registra en consola la información del perfil de GitHub.
-            console.log(profile._json)
-            // Crea un nuevo usuario en la base de datos utilizando la información del perfil de GitHub.
-            const userCreated = await userModel.create({ name: profile._json.name, surname: ' ', email: profile._json.email, age: 18, password: createHash(`${profile._json.name}`) })
-            // Registra en consola el número aleatorio generado.
-            console.log(randomNumber)
-            // Pasa el control al siguiente middleware con el usuario creado.
-            return done(null, userCreated)
+    /*
+    NOTA: ESTA ESTRATEGIA SE COMENTO DEBIDO A UN ERROR EN POSTMAN AL TESTEAR LA ESTRATEGIA DE JWT, YA QUE SE DEBE INGRESAR LA CLAVE: clientID Y clientSecret. PARA QUE FUNCIONE SE DEBE COLOCAR LAS CLAVES.
+    
+    
+    
+    
+    
+    // Declara una estrategia de autenticación para la autenticación mediante GitHub, con el nombre "github"
+    //github es el nombre de mi estrategia
+    passport.use('github', new GithubStrategy({
+        // Configura el ID de cliente de la aplicación GitHub.
+        clientID: "",
+        // Configura la clave secreta del cliente de la aplicación GitHub.
+        clientSecret: "",
+        // Configura la URL de devolución de llamada para la autenticación.
+        callbackURL: "http://localhost:8000/api/session/githubSession"
+    }, async (accessToken, refreshToken, profile, done) => {
+        //done es lo que voy a retornar
+        try {
+            console.log(accessToken)
+            console.log(refreshToken)
+            //LOGUEO DE USUARIO
+            // Busca un usuario en la base de datos por su correo electrónico obtenido de la información del perfil.
+            const user = await userModel.findOne({ email: profile._json.email }).lean()
+            // Si se encuentra un usuario, pasa el control al siguiente middleware con el usuario autenticado.
+            if (user) {
+                done(null, user)
+            } else {
+                // Genera un número aleatorio único.
+                const randomNumber = crypto.randomUUID()
+                // Registra en consola la información del perfil de GitHub.
+                console.log(profile._json)
+                // Crea un nuevo usuario en la base de datos utilizando la información del perfil de GitHub.
+                const userCreated = await userModel.create({ name: profile._json.name, surname: ' ', email: profile._json.email, age: 18, password: createHash(`${profile._json.name}`) })
+                // Registra en consola el número aleatorio generado.
+                console.log(randomNumber)
+                // Pasa el control al siguiente middleware con el usuario creado.
+                return done(null, userCreated)
+            }
+        } catch (error) {
+            // Si ocurre un error durante el proceso, pasa el error al siguiente middleware.
+            return done(error)
         }
-    } catch (error) {
-        // Si ocurre un error durante el proceso, pasa el error al siguiente middleware.
-        return done(error)
-    }
-}))
-
-
-*/
+    }))
+    
+    
+    */
 
 
 
@@ -162,9 +169,9 @@ passport.use('github', new GithubStrategy({
 
     passport.use('jwt', strategyJWT)
 
-    
 
-    
+
+
 
 }
 
