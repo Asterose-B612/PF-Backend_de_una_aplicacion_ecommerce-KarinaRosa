@@ -1,8 +1,7 @@
 // Importa el módulo 'passport' que se utiliza para la autenticación de usuarios.
 import passport from "passport";
 import { userModel } from "../models/user.js";// Utiliza destructuración para importar
-
-
+import { sendEmailChangePassword } from "../utils/nodemailer.js";
 
 // inicio INICIO DE SESION....................
 
