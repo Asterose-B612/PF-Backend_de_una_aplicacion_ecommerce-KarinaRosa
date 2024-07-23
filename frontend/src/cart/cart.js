@@ -1,6 +1,6 @@
 // cart.js
 
-// Ejemplo: Eliminar producto del carrito
+// Eliminar producto del carrito
 document.querySelectorAll('.btn-remove').forEach(button => {
     button.addEventListener('click', () => {
         const item = button.closest('.cart-item');
@@ -9,7 +9,7 @@ document.querySelectorAll('.btn-remove').forEach(button => {
     });
 });
 
-// Ejemplo: Proceder al checkout
+//Proceder al checkout
 document.querySelector('.btn-proceed').addEventListener('click', () => {
     // Aquí puedes redirigir al usuario al checkout o realizar otras acciones
     console.log('Procediendo al checkout...');

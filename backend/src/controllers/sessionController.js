@@ -1,5 +1,5 @@
 // Importa el módulo 'passport' que se utiliza para la autenticación de usuarios.
-import passport from "passport";
+
 import { userModel } from "../models/user.js";// Utiliza destructuración para importar
 import { sendEmailChangePassword } from "../utils/nodemailer.js";
 
@@ -11,7 +11,7 @@ export const login = async (req, res) => {
         // Verifica si no hay usuario autenticado.
         if (!req.user) {
             // Si no hay usuario autenticado, devuelve un código de estado 401 (Unauthorized) con un mensaje de error.
-            return res.status(401).send("Usuario o contraseña no válidos");
+            return res.status(401).json("Usuario o contraseña no válidos");
         }
 
         // Establece la información del usuario en la sesión.
@@ -21,11 +21,12 @@ export const login = async (req, res) => {
         }
 
         // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha logueado correctamente.
-        res.status(200).send("Usuario logueado correctamente");
+        res.status(200).json("Usuario logueado correctamente");
 
     } catch (e) {
         // Si ocurre un error durante el inicio de sesión, envía un mensaje de error con un código de estado 500 (Internal Server Error).
-        res.status(500).send("Error al loguear usuario");
+        res.status(500).json("Error al loguear usuario");
+        
     }
 }
 //fin INICIO DE SESION....................
@@ -45,14 +46,14 @@ export const current = async (req, res) => {
         if (req.user) {
             console.log(req)
             // Si hay un usuario autenticado, envía una respuesta con un código de estado 200 (OK) indicando que el usuario está logueado.
-            res.status(200).send("Usuario logueado");
+            res.status(200).json("Usuario logueado");
         } else {
             // Si no hay un usuario autenticado, devuelve un código de estado 401 (Unauthorized) con un mensaje de error.
-            res.status(401).send("Usuario no autenticado");
+            res.status(401).json("Usuario no autenticado");
         }
     } catch (e) {
         // Si ocurre un error, envía un mensaje de error con un código de estado 500 (Internal Server Error).
-        res.status(500).send("Error al verificar usuario actual");
+        res.status(500).json("Error al verificar usuario actual");
     }
 }
 
@@ -171,7 +172,7 @@ export const testJWT = async (req, res) => {
 
 
 
-// Exporta la función asíncrona changePassword
+// Exporta la función asíncrona changePassword, maneja la solicitud del cambio de contraseña, cuando se hace click en esta ruta.
 export const changePassword = async (req, res) => {
     // Extrae el token de los parámetros de la solicitud
     const { token } = req.params
@@ -179,7 +180,7 @@ export const changePassword = async (req, res) => {
     const { newPassword } = req.body
     try {
         // Verifica y decodifica el token JWT
-        const validateToken = jwt.verify(token.substr(6,), "coder")
+        const validateToken = jwt.verify(token.substr(6,), varenv.secret_Key)
         // Busca al usuario en la base de datos usando el correo electrónico del token validado
         const user = await userModel.findOne({ email: validateToken.userEmail })
         if (user) { // Si el usuario existe
@@ -225,7 +226,7 @@ export const sendEmailPassword = async (req, res) => {
         const user = await userModel.find({ email: email })
         if (user) { // Si el usuario existe
             // Genera un token JWT con el correo electrónico del usuario, que expira en 1 minuto
-            const token = jwt.sign({ userEmail: email }, "coder", { expiresIn: '1m' })
+            const token = jwt.sign({ userEmail: email }, varenv.secret_Key, { expiresIn: '1m' })
             // Crea un enlace para restablecer la contraseña que incluye el token generado
             const resetLink = `http://localhost:8000/api/session/reset-password?token=${token}`
             // Envía un correo electrónico al usuario con el enlace para restablecer la contraseña

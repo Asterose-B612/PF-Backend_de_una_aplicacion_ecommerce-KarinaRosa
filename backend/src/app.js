@@ -189,7 +189,7 @@ app.use(addLogger)
 
 // inicio  Session  ...............
 
-//Configuro que:
+//Configuración de sesión.
 app.use(session({
   //voy a tener un valor secreto
   secret: varenv.session_secret,
@@ -299,10 +299,11 @@ app.get('/session', (req, res) => {
 })
 
 
+/*
 //ruta para loguear usuarios.................
 
 app.post('/login', (req, res) => {
-  //consulto email y contraseña
+    //consulto email y contraseña
   const { email, password } = req.body
   //Simulacion que tengo una Base de datos como tal.
   if (email == email && password == password) {
@@ -311,13 +312,14 @@ app.post('/login', (req, res) => {
     req.session.email = email
     req.session.password = password
     logger.info(req.session);
-    return res.send("Login ok")
+    return res.json("Login ok")
   }
   // si no cumple con estas condiciones
-  res.send("Login invalido")
+  res.status(500).json("Login invalido")
+ 
 })
 
-
+*/
 
 
 //........Routes of logger............

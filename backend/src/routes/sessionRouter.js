@@ -10,12 +10,10 @@ const sessionRouter = Router();
 
 
 // inicio INICIO DE SESION....................
-
-sessionRouter.get('/login', passport.authenticate('login'), login)
+sessionRouter.post('/login', passport.authenticate('login', { session: false }), login);
+//sessionRouter.get('/login', passport.authenticate('login'), login)
 
 //fin INICIO DE SESION....................
-
-
 
 
 
@@ -89,8 +87,12 @@ sessionRouter.get('/testJWT', passport.authenticate('jwt', { session: false }), 
 
 
 
+// inicio RECUPERACION DE CONTRASEÑA....................
+
 sessionRouter.post('/sendEmailPassword',sendEmailPassword)
 
+
+// fin RECUPERACION DE CONTRASEÑA....................
 
 
 

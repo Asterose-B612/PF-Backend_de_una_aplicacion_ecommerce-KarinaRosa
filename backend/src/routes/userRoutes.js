@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers, sendDocuments, deleteInactiveUsers } from "../controllers/userController.js";
+import { getUsers, sendDocuments, deleteInactiveUsers, getUsersAdmin } from "../controllers/userController.js";
 
 
 /*crea un enrutador en Express.js para manejar las solicitudes relacionadas con las operaciones de usuario en la aplicación web.*/
@@ -15,6 +15,12 @@ userRouter.get('/', getUsers)
 
 // Ruta para eliminar usuarios inactivos
 userRouter.delete('/', deleteInactiveUsers);
+
+// Ruta para administrador: todos  los usuarios
+userRouter.delete('/admin', getUsersAdmin);
+
+// Ruta para administrador: eliminacion de 1 usuario
+//userRouter.delete('/admin/:id',deleteUsersOneAdmin);
 
 
 userRouter.post('/:uid/documents', sendDocuments)

@@ -11,7 +11,9 @@ const varenv = {
     // Convertir el valor a un número entero en base 10
     //Aquí, parseInt(process.env.SALT, 10) convierte la cadena '12' en el número entero 12.
     salt: parseInt(process.env.SALT, 10),
-    secret_Key: process.env.SECRET_KEY
+    secret_Key: process.env.SECRET_KEY,
+    email_pass: process.env.EMAIL_PASS,
+    email_user: process.env.EMAIL_USER
 
 }
 

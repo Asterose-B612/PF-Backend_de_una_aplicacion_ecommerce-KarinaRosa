@@ -30,9 +30,9 @@ const jwtOptions = {
     jwtFromRequest:  ExtractJwt.fromAuthHeaderAsBearerToken(),
     //jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() esperar el token de JWT desde la peticion
     //jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]) consultando desde las cookies
-    secretOrKey: varenv.secret_Key
+    secretOrKey:varenv.secret_Key
 }
-
+ 
 
 
 // Importa la estrategia JwtStrategy desde la librería passport-jwt y la asigna a una constante llamada strategyJWT

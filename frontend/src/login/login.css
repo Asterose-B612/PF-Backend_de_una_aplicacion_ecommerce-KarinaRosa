@@ -32,11 +32,11 @@ body {
         0 0 4.375rem #ff00de;
 }
 
-.login-form h2 {
+.loginForm h2 {
     margin-bottom: 1.25rem;
 }
 
-.login-form input {
+.loginForm input {
     width: 100%;
     padding: 0.625rem;
     margin: 0.625rem 0;
@@ -45,7 +45,7 @@ body {
     box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
-.login-form button {
+.loginForm button {
     width: 100%;
     padding: 0.625rem;
     background-color: rgb(226, 174, 182);
@@ -59,16 +59,16 @@ body {
     box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
-.login-form button:hover {
+.loginForm button:hover {
     background-color: rgb(136, 104, 109);
     color: #ffffff;
 }
 
-.login-form p {
+.loginForm p {
     margin-top: 1.25rem;
 }
 
-.login-form a {
+.loginForm a {
     color: rgb(226, 174, 182);
     text-decoration: none;
 }
