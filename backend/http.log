@@ -554,3 +554,6 @@ info: Metodo: GET en ruta /api/session/login - 24/7/2024 18:32:38
 info: Metodo: GET en ruta /api/session/login - 24/7/2024 18:33:46
 info: Metodo: POST en ruta /api/products - 24/7/2024 18:35:25
 info: Metodo: GET en ruta /api/products - 25/7/2024 18:12:13
+info: Metodo: GET en ruta /api/products - 25/7/2024 18:12:18
+info: Metodo: GET en ruta /api/products - 25/7/2024 18:18:08
+info: Metodo: GET en ruta /api/products - 25/7/2024 18:20:07
