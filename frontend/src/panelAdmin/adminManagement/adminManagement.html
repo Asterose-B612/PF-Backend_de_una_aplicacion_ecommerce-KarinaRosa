@@ -15,25 +15,31 @@
         <h2>Gerhard</h2>
       </div>
       <ul>
+        <!-- GESTION DE USUARIOS-->
         <h2 class="section-title">Usuarios</h2>
         <li><a href="#mainContent" id="getAllUsers">Obtener todos</a></li>
         <li><a href="#" id="deleteInactiveUsers">Eliminar inactivos</a></li>
+        <li><a href="#searchUserById" id="searchUserById">Buscar por ID</a></li>
+        <!-- GESTION DE PRODUCTOS-->
         <h2 class="section-title">Productos</h2>
-        <li><a href="#" id="getAllProducts">Obtener todos</a></li>
+        <li><a href="#mainContent" id="getAllProducts">Obtener todos</a></li>
+        <li><a href="#mainContent" id="createProduct">Crear</a></li>
+        <li><a href="#searchProductById" id="searchProductById">Buscar por ID</a></li>
       </ul>
     </nav>
+
     <main class="content">
       <header>
         <h1>Panel de Administración</h1>
       </header>
       <section id="mainContent">
-        <!-- Aquí irá el contenido dinámico -->
+        <!-- Aquí va el contenido dinámico -->
       </section>
     </main>
   </div>
   <script src="adminManagement.js"></script>
+  <script src="adminProducts.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </body>
 
 </html>

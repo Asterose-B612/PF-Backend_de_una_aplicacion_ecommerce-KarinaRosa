@@ -114,7 +114,7 @@ export const sendDocuments = async (req, res) => {
 
 
 // inicio CARGA DE IMAGENES .........................
-
+//Implemento con módulos de multer para cada uno de estos casos. (src/config/multer.js)
 export const imageProds = (req, res) => {
 
     //
@@ -161,11 +161,23 @@ export const deleteInactiveUsers = async (req, res) => {
 
 
 
-// inicio xxxxxxx .........................
+// inicio ELIMINAR UN USUARIO X SU ID .........................
 
-export const getUsersAdmin = () => {
-    console.log("usuarios admin")
 
+export const deleteUserById = async (req, res) => {
+    try {
+        const user = await user.findByIdAndDelete(req.params.uid);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        // Enviar correo al usuario eliminado (opcional, requiere configuración de correo)
+        // sendEmail(user.email, 'Tu cuenta ha sido eliminada', 'Tu cuenta ha sido eliminada por inactividad.');
+
+        res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error del servidor', error: err.message });
+    }
 };
 
-// fin xxxxxxx.........................
+// fin ELIMINAR UN USUARIO X SU ID .........................

@@ -2,8 +2,10 @@ import multer from 'multer';
 import { __dirname } from "../path.js";
 
 
+//CONFIGURACIONES PARA ALMACENAMIENTOS DE IMAGENES DE ....
 
-// Configuración para el almacenamiento de imágenes
+//PRODUCTOS
+
 const STORAGEPRODUCTS = multer.diskStorage({
     // Establece la carpeta de destino como 'src/public/img'
     destination: (req, file, callback) => {
@@ -19,16 +21,17 @@ const STORAGEPRODUCTS = multer.diskStorage({
     }
 });
 
+//NOTA: Los productos van a estar con el nombre original y con la fecha
 
 
 
+//DOCUMENTS
 
-// Configuración para el almacenamiento de imágenes
 const STORAGEDOCS = multer.diskStorage({
     // Establece la carpeta de destino como 'src/public/img'
     destination: (req, file, callback) => {
         //Trabajo con una funcion.  Llama al callback sin errores y especifica la carpeta de destino donde se almacenan las imágenes
-        callback(null, `${__dirname}/documents`)
+        callback(null, `${__dirname}/public/img/docs`)
         //null no hubo error y ruta donde alojo las imagenes
     },
 
@@ -39,12 +42,10 @@ const STORAGEDOCS = multer.diskStorage({
     }
 });
 
+//NOTA: //Los productos estaran con el nombre original y con la fecha pero con documentos la fecha no me sirve xq voy a requerir que sea el nombre de un usuario.  ver video 4°practica integradora 01:37:03
 
+//PROFILES
 
-
-
-
-// Configuración para el almacenamiento de imágenes
 const STORAGEPROFILES = multer.diskStorage({
     // Establece la carpeta de destino como 'src/public/img'
     destination: (req, file, callback) => {
@@ -60,14 +61,12 @@ const STORAGEPROFILES = multer.diskStorage({
     }
 });
 
+//NOTA: Para los perfiles sucede lo mismo que con documents. Iría con el nombre de usuario.
 
 // Genera un objeto que configura Multer con la opción de almacenamiento definida
 export const uploadProducts = multer({ storage: STORAGEPRODUCTS });
 export const uploadDocs = multer({ storage: STORAGEDOCS });
 export const uploadPerfs = multer({ storage: STORAGEPROFILES });
-
-
-
 
 // Exporta el objeto configurado de Multer para su uso en otros módulos
 //export default upload;

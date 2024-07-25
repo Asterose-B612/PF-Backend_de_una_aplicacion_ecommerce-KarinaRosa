@@ -47,3 +47,12 @@ productSchema.plugin(mongoosePaginate)
 const productModel = model("products", productSchema)
 
 export default productModel
+
+
+
+
+
+
+/**
+]
+ */

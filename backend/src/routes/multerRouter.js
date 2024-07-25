@@ -7,4 +7,5 @@ multerRouter.post('/profiles', uploadPerfs.single('profile'), insertImg)
 multerRouter.post('/docs', uploadDocs.single('doc'), insertImg)
 multerRouter.post('/products', uploadProducts.single('product'), insertImg)
 
+
 export default multerRouter

@@ -10,9 +10,9 @@ const sessionRouter = Router();
 
 
 // inicio INICIO DE SESION....................
-sessionRouter.post('/login', passport.authenticate('login', { session: false }), login);
+sessionRouter.post('/login',  login);
 //sessionRouter.get('/login', passport.authenticate('login'), login)
-
+//passport.authenticate('login', { session: false }),
 //fin INICIO DE SESION....................
 
 
