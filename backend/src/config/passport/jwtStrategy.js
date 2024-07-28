@@ -1,9 +1,13 @@
+//1°:ESTRATEGIA JWT CON PASSPORT
 import varenv from '../../dotenv.js'
 /*importa dos objetos, Strategy y ExtractJwt, desde el módulo "passport-jwt". Estos objetos son utilizados  para implementar una estrategia de autenticación basada en JSON Web Tokens (JWT) en una aplicación web utilizando la biblioteca Passport.js en Node.js.*/
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import { userModel } from "../../models/user.js";
 
-// Definición de la función cookieExtractor que toma un objeto req (presumiblemente una solicitud HTTP) como argumento
+//2° EXTRACTOR DE COOKIES: 
+//Función cookieExtractor:Esta función extrae el token JWT de las cookies en la solicitud. Si las cookies existen, toma el valor de jwtCookie. Si no, devuelve un objeto vacío {}.
+
+//Definición de la función cookieExtractor que toma un objeto req (presumiblemente una solicitud HTTP) como argumento
 const cookieExtractor = req => {
     // Imprime en la consola el objeto cookies de la solicitud req para propósitos de depuración o comprensión
     console.log(req.cookies) 
@@ -24,6 +28,9 @@ console.log(varenv.jwt_secret)
 //1° Defino, Donde voy a consultar esos valores?
 //Lo voy a hacer de las cookies
 
+//Configuración de opciones de JWT:Se definen las opciones para la estrategia JWT. Aquí decides de dónde se extraerá el token (en este caso, desde el encabezado de autorización).
+
+//3° OPCIONES DE JWT
 const jwtOptions = {
     //Este token →jwtFromRequest lo voy a consultar de el archivo llamado ExtractJwt donde yo digo de donde lo voy a traer el token. Puedo extraerlo del query, header, del mismo archivo o de la forma mas común que es del headerAsBeaererToken
     //aqui lo extraigo desde el header
@@ -34,8 +41,9 @@ const jwtOptions = {
 }
  
 
-
-// Importa la estrategia JwtStrategy desde la librería passport-jwt y la asigna a una constante llamada strategyJWT
+//4° ESTRATEGIA JWT
+//Esta parte define cómo se validará el token y qué se hará con el payload (la información del usuario contenida en el token).
+// Importa la estrategia JwtStrategy desde la librería passport-jwt y la asigna a una constante llamada strategyJWT. 
 export const strategyJWT = new JwtStrategy(jwtOptions, async (payload, done) => {
        // La función de callback es asíncrona ya que se va a realizar una consulta a la base de datos
         //payload va a contener toda la info referida al usuario
@@ -62,3 +70,5 @@ export const strategyJWT = new JwtStrategy(jwtOptions, async (payload, done) => 
     }
 });
 /*ES IDENTICO AL LOGUIN (ver en pssport.js)*/
+
+

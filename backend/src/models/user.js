@@ -45,6 +45,7 @@ const userSchema = new Schema({
         type: Object,
         default: []
     },
+    //ARRANCA EN NULL PORQUE AÚN NO SE LOGUEO
 //ultima conexion de logueo y deslogueo
 //lo trabajo en 2 lugares: login y en logout. NO los trabajo desde los controladores porque los estoy trabajando desde password
     last_connection: {

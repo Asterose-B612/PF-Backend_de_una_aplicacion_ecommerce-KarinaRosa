@@ -8,16 +8,6 @@ import { login, register, sessionGithub,current, logout, testJWT, sendEmailPassw
 const sessionRouter = Router();
 
 
-
-// inicio INICIO DE SESION....................
-sessionRouter.post('/login',  login);
-//sessionRouter.get('/login', passport.authenticate('login'), login)
-//passport.authenticate('login', { session: false }),
-//fin INICIO DE SESION....................
-
-
-
-
 // inicio REGISTRO....................
 
 //passport.authenticate: Esta función de Passport se utiliza para autenticar solicitudes. Toma el nombre de una estrategia de Passport como primer argumento y opciones adicionales como segundo argumento.
@@ -28,6 +18,15 @@ sessionRouter.post('/register', passport.authenticate('register', { session: fal
 
 // fin REGISTRO....................
 
+
+
+
+// inicio INICIO DE SESION....................
+//sessionRouter.post('/login',  login);
+//sessionRouter.get('/login', passport.authenticate('login'), login)
+sessionRouter.post('/login', passport.authenticate('login'), login)
+//passport.authenticate('login', { session: false }),
+//fin INICIO DE SESION....................
 
 
 

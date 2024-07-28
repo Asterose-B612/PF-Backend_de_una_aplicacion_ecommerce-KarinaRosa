@@ -103,7 +103,7 @@ export const createProduct = async (req, res) => {
 
     try {
        // verificación de rol de usuario (if (req.user.rol == "Admin")) para permitir solo a los administradores crear productos. Si el usuario no es un administrador, respondería con un estado 403 (Prohibido)
-    if (req.user.rol == "Admin") {
+    if (req.user.rol == "admin") {
        // const product = req.body obtiene el cuerpo de la solicitud. (req.body), que debe contener los datos del producto que se va a crear.
             const product = req.body
             //const mensaje = await productModel.create(product) usa await para esperar la resolución de la promesa devuelta por productModel.create(product). Esta función probablemente guarda el producto en una base de datos y devuelve una respuesta.
@@ -132,7 +132,7 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     try {
-        if (req.user.rol == "Admin") {
+        if (req.user.rol == "admin") {
             const idProducto = req.params.pid
             const updateProduct = req.body
             const prod = await productModel.findByIdAndUpdate(idProducto, updateProduct)
@@ -158,7 +158,7 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     try {
         console.log(req.user.rol)
-        if (req.user.rol == "Admin") {
+        if (req.user.rol == "admin") {
             const idProducto = req.params.pid
             const mensaje = await productModel.findByIdAndDelete(idProducto)
             res.status(200).send(mensaje)

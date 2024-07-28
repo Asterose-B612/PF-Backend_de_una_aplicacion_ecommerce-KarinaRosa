@@ -11,7 +11,7 @@ export const login = async (req, res) => {
         // Verifica si no hay usuario autenticado.
         if (!req.user) {
             // Si no hay usuario autenticado, devuelve un código de estado 401 (Unauthorized) con un mensaje de error.
-            return res.status(401).json("Usuario o contraseña no válidos");
+            return res.status(401).json("Usuario o contraseña no válidos" );
         }
 
         // Establece la información del usuario en la sesión.

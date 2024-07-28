@@ -1,33 +1,44 @@
 
-    const loginForm = document.getElementById('loginForm');
+const loginForm = document.getElementById('loginForm');
 
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
- // Envía una solicitud POST al servidor con los datos del formulario
-        fetch('http://localhost:8000/api/session/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-        .then(response => {
-            // Verifica si la respuesta del servidor es exitosa
+loginForm.addEventListener('submit', async(event) => {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Validar que los campos no estén vacíos
+    if (!email || !password) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Por favor, ingrese tanto el correo electrónico como la contraseña.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return; // Detiene la ejecución si los campos están vacíos
+    }
+
+
+    try{
+         // Envía una solicitud POST al servidor con los datos del formulario
+        const response = await fetch('http://localhost:8000/api/session/login', {
+        method: 'POST',
+        headers: {
+             // Indica que el cuerpo de la solicitud está en formato JSON
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+    })
             if (!response.ok) {
                 // Lanza un error si la respuesta no es exitosa
                 throw new Error('Network response was not ok');
             }
             // Convierte la respuesta a JSON
-            return response.json();
-        })
+            const data = await response.json();
+            // Muestra la respuesta del servidor en la consola
+                 console.log("DATA: LOGIN: ", data); 
 
-
-        .then(data => {
-            console.log("DATA: LOGIN: ", data); // Maneja la respuesta del backend
-    
+                   // Maneja la respuesta del servidor
             // Verifica si el login fue exitoso
             if (data.success) {
                 // Muestra una alerta de éxito utilizando SweetAlert2
@@ -39,9 +50,9 @@
                 }).then(() => {
                     // Redirige según el rol del usuario
                     if (data.rol === 'admin') {
-                        window.location.href = './panelAdmin/adminManagement/adminManagement.html'; // Redirige al panel de administración
+                        window.location.href = '../panelAdmin/adminManagement/adminManagement.html'; // Redirige al panel de administración
                     } else {
-                        window.location.href = '/inicio/inicio/html'; // Redirige a la aplicación principal
+                        window.location.href = '../inicio/inicio.html'; // Redirige a la aplicación principal
                     }
                 });
             } else {
@@ -53,8 +64,7 @@
                     confirmButtonText: 'OK'
                 });
             }
-        })
-        .catch(error => {
+        }catch(error) {
             // Muestra un mensaje de error en la consola
             console.error('Error:', error);
             // Muestra una alerta de error utilizando SweetAlert2
@@ -64,5 +74,5 @@
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
-        });
-    });
+        };
+});

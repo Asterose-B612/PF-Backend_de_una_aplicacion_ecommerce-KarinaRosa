@@ -69,6 +69,8 @@ export const generateRandomUsers = () => {
 
 // inicio ENVIO DOCUMENTOS .........................
 
+//ES UN METODO POST PERO TAMBIEN E DA COMO UN METODO PictureInPictureEvent, ES ALGO RARO
+
 //funcion que me devuelva 1 o multiples archivos. Del body me va a llegar una array. En vío un array de datos
 export const sendDocuments = async (req, res) => {
     //aca vamos a guardar esos datos 
