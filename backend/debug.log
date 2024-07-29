@@ -831,3 +831,5 @@ info: Metodo: GET en ruta /api/users - 29/7/2024 16:12:49
 info: Metodo: GET en ruta /api/users/66a7d4a4f0f33ce453cf454c - 29/7/2024 16:13:18
 info: Metodo: GET en ruta /api/users - 29/7/2024 16:14:44
 info: Metodo: GET en ruta /api/users/66a7d4a4f0f33ce453cf454c - 29/7/2024 16:15:35
+info: Metodo: GET en ruta /api/users/66a7d4a4f0f33ce453cf454c - 29/7/2024 16:16:29
+info: Metodo: DELETE en ruta /api/users/66a7d4a4f0f33ce453cf454c - 29/7/2024 16:16:39
