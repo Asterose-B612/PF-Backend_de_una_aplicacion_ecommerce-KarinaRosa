@@ -1,10 +1,8 @@
 //importo la estrategia local
 import local from 'passport-local'
 import passport from 'passport'
-
 //import crypto from 'crypto'
 //import GithubStrategy from 'passport-github2'
-
 //cuando estoy trabajando con estrategia local importo userModel, consulto usuarios (user.js)
 import { userModel } from '../../models/user.js'
 //importo bcrypt (el hasheo y validacion)
@@ -23,8 +21,10 @@ const initializePassport = () => {
 
     //passReqToCallback: true: Permite que el callback de la estrategia reciba el objeto req, lo que es útil para acceder a los datos del cuerpo de la solicitud.
     //usernameField: 'email': Especifico email en el cuerpo de la solicitud se usará como el "nombre de usuario" para esta estrategia. En este caso, el "nombre de usuario" es en realidad el correo electrónico.
-    passport.use('register', new localStrategy({ passReqToCallback:
-         true, usernameField: 'email' }, async (req, username, password, done) => { //llamo a la estrategia register, que va a implementar la estrategia local
+    passport.use('register', new localStrategy({
+        passReqToCallback:
+            true, usernameField: 'email'
+    }, async (req, username, password, done) => { //llamo a la estrategia register, que va a implementar la estrategia local
         //local strategies trabaja por defecto con user.name y password. En este caso no tengo un user,name, tenemos un email:Por lo cual definimos en usernameField que va a ser un email. Lo que va a simplificar la tarea de poderme registrar va a ser el email.
         //username seria mi email
         //password es la contraseña
@@ -46,8 +46,8 @@ const initializePassport = () => {
                SI EXISTE EL USUARIO NO LO PUEDO REGISTRAR*/
             } else {
                 //guardo en variable el usuario para luego usar el valor
-                 // Si el usuario no existe, crea un nuevo usuario
-                const user = await userModel.create({ name: name, surname: surname, password: createHash(password), age: age, email: email })
+                // Si el usuario no existe, crea un nuevo usuario
+                const user = await userModel.create({ name, surname, password: createHash(password), age, email })
                 return done(null, user)
                 //Aqui voy a poder generar mi usuario por lo cual retorno null y true. True xq pude crear a mi usuario.
                 //devuelvo el usuario
@@ -56,35 +56,19 @@ const initializePassport = () => {
             return done(e)
             //si sucede algun error envío el error
         }
-    }))
+    }))//.....................................................
 
-    //ESTRATEGIAS DE LOGUEO
+    // ESTRATEGIA DE LOGIN
 
-    //APARTE PARA IMPLEMENTAR LAS SESONES DE LOS USUARIOS VOY A TRABAJAR CON 2 FUNCIONES, PARA AGREGAR O ELIMINAR LAS SESIONES:
 
-    // 1: Inicializar la sesion del usuario (con su respectivo id)
-    passport.serializeUser((user, done) => {
-        //consulto x un usuario y por un return:done 
-        done(null, user._id)
-        //me devuelve 2 valores: : que no existió ningun error: null y el identificador deo usuario
-    })
-    // 2: Eliminar la sesion del usuario
-    passport.deserializeUser(async (id, done) => {
-        //pido un id, un done        
-        const user = await userModel.findById(id)
-        //devuelvo un valor. Busco un usuario dicho id...
-        done(null, user)
-        //...elimino la sesion
-    })
-    
 
     //no uso callback solo uso el usernameField especificando que mi username va a ser mi email
     //aqui no voy a pedir un request porque me voy a loguear
     passport.use('login', new localStrategy({ usernameField: 'email' }, async (username, password, done) => {
         //username representa al email y password a la contraseña
         try {
-            const user = await userModel.findOne({ email: username })//.lean()
-
+            const user = await userModel.findOne({ email: username });
+            //.lean() → arroja error: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
             console.log(user)
             //aqui indico que email es el username.
             //LA ESTRATEGIA LOCAL NECESITA UN USERNAME Y YO LE ESPECIFICO QUE LO QUE SERIA EL REQUEST BODY DE MI CONSULTA VA A SER EL EMAIL. EN ESTE CASO USERNAME Y EMAIL REPRESENTAN LO MISMO. PASSWORD SIGUE COMO PASSWORD, NO CAMBIA
@@ -96,9 +80,9 @@ const initializePassport = () => {
                 /* user.last_connection.toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });*/
                 await user.save()
 
-                return done(null, user)
+                return done(null, user);
             } else {
-                return done(null, false)
+                return done(null, false);
             }
         } catch (e) {
             return done(e)
@@ -109,14 +93,34 @@ const initializePassport = () => {
 
 
 
+    //ESTRATEGIA DE SERIALIZACIÓN Y DESERIALIZACIÓN DE USUARIO
 
-    //ESTRATEGIA DE GITHUB
+    //APARTE PARA IMPLEMENTAR LAS SESONES DE LOS USUARIOS VOY A TRABAJAR CON 2 FUNCIONES, PARA AGREGAR O ELIMINAR LAS SESIONES:
+
+    // 1: Inicializar la sesion del usuario (con su respectivo id)
+    passport.serializeUser((user, done) => {
+        //consulto x un usuario y por un return:done 
+        done(null, user._id)
+        //me devuelve 2 valores: : que no existió ningun error: null y el identificador deo usuario
+    });
+    // 2: Eliminar la sesion del usuario
+    passport.deserializeUser(async (id, done) => {
+        try {
+            //pido un id, un done        
+            const user = await userModel.findById(id)
+            //devuelvo un valor. Busco un usuario dicho id...
+            done(null, user)
+            //...elimino la sesion
+        } catch (error) {
+            done(error);
+        }
+    });
+
+
+    //ESTRATEGIA DE GITHUB............................
 
     /*
-    NOTA: ESTA ESTRATEGIA SE COMENTO DEBIDO A UN ERROR EN POSTMAN AL TESTEAR LA ESTRATEGIA DE JWT, YA QUE SE DEBE INGRESAR LA CLAVE: clientID Y clientSecret. PARA QUE FUNCIONE SE DEBE COLOCAR LAS CLAVES.
-    
-    
-    
+    NOTA: ESTA ESTRATEGIA SE COMENTO DEBIDO A UN ERROR EN POSTMAN AL TESTEAR LA ESTRATEGIA DE JWT, YA QUE SE DEBE INGRESAR LA CLAVE: clientID Y clientSecret. PARA QUE FUNCIONE SE DEBE COLOCAR LAS CLAVES.     
     
     
     // Declara una estrategia de autenticación para la autenticación mediante GitHub, con el nombre "github"
@@ -156,25 +160,14 @@ const initializePassport = () => {
             return done(error)
         }
     }))
-    
-    
+        
     */
 
-
-
-
-
-    //ESTRATEGIA DE JWT
+    //ESTRATEGIA DE JWT.................................
 
     //En lugar de escribir todo el codigo como la estrategia anterior lo que hago es guardarlo en una constante en otro archivo. Entonces queda lo que es el passport solamente el uso de las estrategias y NO su definición.
 
     passport.use('jwt', strategyJWT)
-
-
-
-
-
 }
-
 
 export default initializePassport

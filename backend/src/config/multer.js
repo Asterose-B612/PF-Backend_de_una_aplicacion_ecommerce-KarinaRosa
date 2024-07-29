@@ -1,11 +1,7 @@
 import multer from 'multer';
 import { __dirname } from "../path.js";
-
-
 //CONFIGURACIONES PARA ALMACENAMIENTOS DE IMAGENES DE ....
-
 //PRODUCTOS
-
 const STORAGEPRODUCTS = multer.diskStorage({
     // Establece la carpeta de destino como 'src/public/img'
     destination: (req, file, callback) => {
@@ -13,7 +9,6 @@ const STORAGEPRODUCTS = multer.diskStorage({
         callback(null, `${__dirname}/public/img/products`)
         //null no hubo error y ruta donde alojo las imagenes
     },
-
     // Define el nombre de archivo como una marca de tiempo seguida del nombre original
     filename: (req, file, cb) => {
         // Llama al callback sin errores y establece el nombre del archivo utilizando una marca de tiempo seguida del nombre original del archivo
@@ -24,9 +19,7 @@ const STORAGEPRODUCTS = multer.diskStorage({
 //NOTA: Los productos van a estar con el nombre original y con la fecha
 
 
-
 //DOCUMENTS
-
 const STORAGEDOCS = multer.diskStorage({
     // Establece la carpeta de destino como 'src/public/img'
     destination: (req, file, callback) => {
@@ -45,7 +38,6 @@ const STORAGEDOCS = multer.diskStorage({
 //NOTA: //Los productos estaran con el nombre original y con la fecha pero con documentos la fecha no me sirve xq voy a requerir que sea el nombre de un usuario.  ver video 4°practica integradora 01:37:03
 
 //PROFILES
-
 const STORAGEPROFILES = multer.diskStorage({
     // Establece la carpeta de destino como 'src/public/img'
     destination: (req, file, callback) => {
@@ -53,7 +45,6 @@ const STORAGEPROFILES = multer.diskStorage({
         callback(null, `${__dirname}/public/img/profiles`)
         //null no hubo error y ruta donde alojo las imagenes
     },
-
     // Define el nombre de archivo como una marca de tiempo seguida del nombre original
     filename: (req, file, cb) => {
         // Llama al callback sin errores y establece el nombre del archivo utilizando una marca de tiempo seguida del nombre original del archivo

@@ -1,7 +1,7 @@
-// Importa el módulo 'passport' que se utiliza para la autenticación de usuarios.
 
 import { userModel } from "../models/user.js";// Utiliza destructuración para importar
 import { sendEmailChangePassword } from "../utils/nodemailer.js";
+import {generateToken} from "../utils/jwt.js"
 
 // inicio INICIO DE SESION....................
 
@@ -9,23 +9,33 @@ import { sendEmailChangePassword } from "../utils/nodemailer.js";
 export const login = async (req, res) => {
     try {
         // Verifica si no hay usuario autenticado.
+        //ESTA CONDICION ASUME QUE RE.USER SE ESTABLECE CORRECTAMENTE DESPUES DE LA AUTENTICACION. LA AUTENTICACION DEBE SER REALIZADA ANTES DE LLEGAR A ESTE PUNTOEN EL CODIGO, USUALMENTE ES UN MIDDLEWARE.
         if (!req.user) {
             // Si no hay usuario autenticado, devuelve un código de estado 401 (Unauthorized) con un mensaje de error.
-            return res.status(401).json("Usuario o contraseña no válidos" );
+            return res.status(401).json({ error: "Usuario o contraseña no válidos" });
         }
 
+          // Genera el token JWT para el usuario autenticado
+          const token = generateToken(req.user);
+       
+console.log(token)
+//console.log('Encabezados de la solicitud:', req.headers);
         // Establece la información del usuario en la sesión.
         req.session.user = {
             email: req.user.email,
-            name: req.user.name
+            name: req.user.name,
+            //rol: user.rol
+          
         }
 
         // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha logueado correctamente.
-        res.status(200).json("Usuario logueado correctamente");
+        res.status(200).json({ message: "Usuario logueado correctamente" });
+
 
     } catch (e) {
         // Si ocurre un error durante el inicio de sesión, envía un mensaje de error con un código de estado 500 (Internal Server Error).
-        res.status(500).json("Error al loguear usuario");
+        res.status(500).json({ error: "Error al loguear usuario" });
+
         
     }
 }

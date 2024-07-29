@@ -59,11 +59,12 @@ const PORT = 8000
 const corsOptions = {
   //solo las rutas que esten dentro de origin se va a poder conectar
   origin: 'http://127.0.0.1:5500',
-  methods: ['GET', 'POST', 'UPDATE', 'DELETE']
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true  
 }
 
 // Se aplica el middleware CORS con opciones personalizadas.
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 //ruta para verificar el funcionamiento de cors
 // Defino una ruta GET llamada '/bienvenida'
 app.get('/bienvenida', (req, res) => {
@@ -71,13 +72,10 @@ app.get('/bienvenida', (req, res) => {
   // req: representa la solicitud HTTP que llega al servidor
   // res: representa la respuesta HTTP que será enviada de vuelta al cliente
   // Configura el código de estado de la respuesta como 200 (OK) y envía un objeto JSON como respuesta
-  res.status(200).send({ mensaje: "Bienvenidos a Gerhard" })
-})
+  res.status(200).send({ mensaje: "Bienvenidos a Gerhard" });
+});
 
 // fin  Cors  ...............
-
-
-
 
 
 
@@ -91,7 +89,6 @@ const SERVER = app.listen(PORT, () => {
   // Se imprime un mensaje en la consola indicando que el servidor se ha iniciado correctamente y en qué puerto está escuchando.
   console.log(`Server on port ${PORT}`);
 });
-
 
 //declaro un nuevo servidor de sockets.io
 const io = new Server(SERVER)
@@ -174,7 +171,7 @@ app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 
 //el servidor podrá recibir json al momento de la petición
-app.use(express.json())
+app.use(express.json());
 //permite que se pueda mandar informacion tambien desde la URL
 app.use(express.urlencoded({ extended: true }))
 
@@ -234,9 +231,9 @@ app.set('views', __dirname + '/views')
 //........ Routes of PASSPORT..........
 initializePassport()
 //ejecuto la funcion
-app.use(passport.initialize())
+app.use(passport.initialize());
 //iniciá todo lo que serian las estrategias de autentificacion
-app.use(passport.session())
+app.use(passport.session());
 //generame lo que sería las sesiones
 
 

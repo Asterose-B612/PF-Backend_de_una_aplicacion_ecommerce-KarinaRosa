@@ -8,7 +8,7 @@ import { userModel } from "../../models/user.js";
 //Función cookieExtractor:Esta función extrae el token JWT de las cookies en la solicitud. Si las cookies existen, toma el valor de jwtCookie. Si no, devuelve un objeto vacío {}.
 
 //Definición de la función cookieExtractor que toma un objeto req (presumiblemente una solicitud HTTP) como argumento
-const cookieExtractor = req => {
+/*const cookieExtractor = req => {
     // Imprime en la consola el objeto cookies de la solicitud req para propósitos de depuración o comprensión
     console.log(req.cookies) 
        // Verifica si req.cookies existe
@@ -19,7 +19,7 @@ const cookieExtractor = req => {
     console.log(token)
       // Retorna el valor de token
     return token
-}
+}*/
 
 //ESTO ES LO QUE ME SALE POR CONSOLA: CODERHOUSE
 console.log(varenv.jwt_secret)
@@ -37,7 +37,7 @@ const jwtOptions = {
     jwtFromRequest:  ExtractJwt.fromAuthHeaderAsBearerToken(),
     //jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() esperar el token de JWT desde la peticion
     //jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]) consultando desde las cookies
-    secretOrKey:varenv.secret_Key
+    secretOrKey: varenv.secret_Key
 }
  
 

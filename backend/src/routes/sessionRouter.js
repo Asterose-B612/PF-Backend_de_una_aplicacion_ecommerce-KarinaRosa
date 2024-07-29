@@ -24,8 +24,9 @@ sessionRouter.post('/register', passport.authenticate('register', { session: fal
 // inicio INICIO DE SESION....................
 //sessionRouter.post('/login',  login);
 //sessionRouter.get('/login', passport.authenticate('login'), login)
-sessionRouter.post('/login', passport.authenticate('login'), login)
-//passport.authenticate('login', { session: false }),
+//sessionRouter.post('/login', passport.authenticate('login'), login)
+sessionRouter.post('/login',passport.authenticate('login', { session: false }), login)
+//
 //fin INICIO DE SESION....................
 
 
