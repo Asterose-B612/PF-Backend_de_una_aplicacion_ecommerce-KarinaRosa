@@ -2,7 +2,7 @@
 import { userModel } from "../models/user.js";
 import { createRandomUser } from "../mockings.js/mockingUsers.js";
 //envio de correos
-import {sendEmailForDeletion} from '../utils/nodemailer.js';
+import { sendEmailForDeletion } from '../utils/nodemailer.js';
 
 // inicio OBTENER TODOS LOS USUARIOS SOLAMENTE CON EL CAMPO NAME, EMAIL Y ROL  .........................
 
@@ -16,7 +16,7 @@ import {sendEmailForDeletion} from '../utils/nodemailer.js';
 export const getUsers = async (req, res) => {
     //en try consulto los usuarios
     try {
-       
+
         console.log("Entrando en getUsers");
         //CONSULTO LA BASE DE DATOS
         //usando find para obtener todos los documentos de la colección de usuarios. 
@@ -45,6 +45,55 @@ export const getUsers = async (req, res) => {
 }
 
 // fin OBTENER TODOS LOS USUARIOS SOLAMENTE CON EL CAMPO NAME, EMAIL Y ROL  .........................
+
+
+
+// inicio BUSCAR UN USAURIO POR ID...........
+
+// Función para buscar un usuario por ID
+export const getUserById = async (req, res) => {
+    try {
+        // Buscar el usuario por ID
+        const user = await userModel.findById(req.params.uid);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        // Enviar la información del usuario
+        res.status(200).json(user);
+    } catch (err) {
+        console.error('Error al obtener detalles del usuario:', err);
+        res.status(500).json({ message: 'Error del servidor', error: err.message });
+    }
+};
+// fin BUSCAR UN USAURIO POR ID...........
+
+
+
+// inicio ELIMINAR UN USUARIO X SU ID .........................
+
+export const deleteUserById = async (req, res) => {
+    try {
+        // Buscar y eliminar el usuario por ID
+        const user = await userModel.findByIdAndDelete(req.params.uid);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        // confirmación de eliminación
+        res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error del servidor', error: err.message });
+    }
+};
+// fin ELIMINAR UN USUARIO X SU ID .........................
+
+
+
+
+
+
+
+
 
 
 
@@ -132,27 +181,27 @@ export const imageProds = (req, res) => {
 // Función para eliminar usuarios inactivos
 export const deleteInactiveUsers = async (req, res) => {
     try {
-         // Calcula la fecha límite, que es 2 días atrás desde el momento actual
+        // Calcula la fecha límite, que es 2 días atrás desde el momento actual
         const twoDaysAgo = new Date();
         twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
         // Encuentra usuarios inactivos
-           // Busca usuarios cuya última conexión sea anterior a la fecha límite
+        // Busca usuarios cuya última conexión sea anterior a la fecha límite
         const inactiveUsers = await userModel.find({ last_connection: { $lt: twoDaysAgo } });
 
         // Elimina usuarios inactivos y envía un correo
-            // Itera sobre los usuarios inactivos encontrados
+        // Itera sobre los usuarios inactivos encontrados
         for (const user of inactiveUsers) {
-             // Elimina el usuario de la base de datos por su ID
+            // Elimina el usuario de la base de datos por su ID
             await userModel.findByIdAndDelete(user._id);
 
             // Envía un correo notificando la eliminación
             await sendEmailForDeletion(user.email);
         }
- // Envía una respuesta al cliente con el número de usuarios eliminados
+        // Envía una respuesta al cliente con el número de usuarios eliminados
         res.status(200).send(`${inactiveUsers.length} usuarios inactivos eliminados.`);
     } catch (e) {
-            // Maneja cualquier error que ocurra durante el proceso
+        // Maneja cualquier error que ocurra durante el proceso
         console.error('Error al eliminar usuarios inactivos:', e.message);
         res.status(500).send(`Error al eliminar usuarios inactivos: ${e.message}`);
     }
@@ -162,24 +211,3 @@ export const deleteInactiveUsers = async (req, res) => {
 
 
 
-
-// inicio ELIMINAR UN USUARIO X SU ID .........................
-
-
-export const deleteUserById = async (req, res) => {
-    try {
-        const user = await user.findByIdAndDelete(req.params.uid);
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-
-        // Enviar correo al usuario eliminado (opcional, requiere configuración de correo)
-        // sendEmail(user.email, 'Tu cuenta ha sido eliminada', 'Tu cuenta ha sido eliminada por inactividad.');
-
-        res.status(200).json({ message: 'Usuario eliminado correctamente' });
-    } catch (err) {
-        res.status(500).json({ message: 'Error del servidor', error: err.message });
-    }
-};
-
-// fin ELIMINAR UN USUARIO X SU ID .........................
