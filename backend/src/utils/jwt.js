@@ -45,3 +45,20 @@ export function authenticateToken(req, res, next) {
         res.status(400).send({ error: 'Invalid token' });
     }
 }*/
+
+
+//middleware para AUTENTICAL EL ROL
+
+// Middleware para verificar el rol
+/*
+const authorizeRole = (rol) => {
+    return (req, res, next) => {
+        const userRol = req.user.rol; // Asume que `req.user` es el usuario autenticado
+        if (userRol === rol) {
+            return next();
+        }
+        return res.status(403).json({ error: 'Acceso denegado' });
+    }
+}
+*/
+

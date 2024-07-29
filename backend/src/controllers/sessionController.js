@@ -50,14 +50,15 @@ export const login = async (req, res) => {
         req.session.user = {
             email: req.user.email,
             name: req.user.name,
-            //rol: user.rol
+           rol: req.user.rol
 
         }
 
         // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha logueado correctamente.
         res.status(200).json({
             message: "Usuario logueado correctamente",
-            token: token // Devolver el token en la respuesta
+            token: token ,// Devolver el token en la respuesta
+            rol: req.user.rol // Devolver el rol del usuario en la respuesta
         });
 
 

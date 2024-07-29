@@ -25,7 +25,8 @@ loginForm.addEventListener('submit', async (event) => {
             method: 'POST',
             headers: {
                 // Indica que el cuerpo de la solicitud está en formato JSON
-             'Content-Type': 'application/json',         
+             'Content-Type': 'application/json',
+           
               
             },
             body: JSON.stringify({ email, password }),
@@ -50,9 +51,10 @@ loginForm.addEventListener('submit', async (event) => {
 
         // Maneja la respuesta del servidor
         // Verifica si el login fue exitoso
-        if (data.token) {
+        if (data.token && data.rol) {
              // Guarda el token en localStorage
              localStorage.setItem('token', data.token);
+             localStorage.setItem('rol', data.rol);
             // Muestra una alerta de éxito utilizando SweetAlert2
             Swal.fire({
                 title: 'Logueo exitoso!',
@@ -82,7 +84,7 @@ loginForm.addEventListener('submit', async (event) => {
         // Muestra una alerta de error utilizando SweetAlert2
         Swal.fire({
             title: 'Error!',
-            text: error.message || 'Error al loguearse.',
+            text: 'Usuario no existente',
             icon: 'error',
             confirmButtonText: 'OK'
         });

@@ -15,25 +15,18 @@ const sessionRouter = Router();
 //{ session: false }: Es una opción que indica que no se debe crear ni mantener una sesión para la autenticación de esta solicitud.  Esto es útil en contextos como el registro, donde no necesitas mantener una sesión persistente después de que el usuario se ha registrado. Es común en las solicitudes de API donde se prefieren tokens (como JWT) en lugar de sesiones tradicionales.
 //Esto es típico en el registro, ya que el objetivo principal es crear una cuenta y no autenticar al usuario para una sesión persistente.
 sessionRouter.post('/register', passport.authenticate('register', { session: false }), register)
-
 // fin REGISTRO....................
 
 
-
-
 // inicio INICIO DE SESION....................
-//sessionRouter.post('/login',  login);
-//sessionRouter.get('/login', passport.authenticate('login'), login)
-//sessionRouter.post('/login', passport.authenticate('login'), login)
+
 sessionRouter.post('/login',passport.authenticate('login', { session: false }), login)
 //
 //fin INICIO DE SESION....................
 
 
 
-
 // inicio RUTA GITHUB....................
-
 // Ruta GET para la autenticación de GitHub de mi usuario, que utiliza Passport.js para iniciar la autenticación utilizando la estrategia 'github' configurada previamente.
 
 sessionRouter.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {  })
@@ -70,9 +63,6 @@ sessionRouter.get('/current', passport.authenticate('jwt'), current)
 sessionRouter.get('/logout', logout);
 
 // fin LOGOUT....................
-
-
-
 
 
 
