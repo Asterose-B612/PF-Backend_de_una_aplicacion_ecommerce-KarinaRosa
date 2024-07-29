@@ -60,7 +60,7 @@ const initializePassport = () => {
 
     // ESTRATEGIA DE LOGIN
 
-
+    //Passport maneja la autenticación en la ruta de login.
 
     //no uso callback solo uso el usernameField especificando que mi username va a ser mi email
     //aqui no voy a pedir un request porque me voy a loguear

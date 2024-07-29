@@ -27,3 +27,21 @@ console.log(generateToken({
     "rol": "User",
     "__v": 0
 }))*/
+
+/*
+ //para proteger rutas después del login
+ 
+export function authenticateToken(req, res, next) {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    if (!token) {
+        return res.status(401).send({ error: 'Access denied' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        req.user = decoded;
+        next();
+    } catch (err) {
+        res.status(400).send({ error: 'Invalid token' });
+    }
+}*/

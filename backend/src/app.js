@@ -43,16 +43,12 @@ const app = express();
 const PORT = 8000
 
 
-
 //
 // inicio  Cors  ...............
-
 //Cors: whitelist (lista blanca de servidores que pueden acceder). 
 //const whiteList = ['http://127.0.0.1:5500']
 
-
 //Permitir todas las rutas:  app.use(cors())
-
 //Se declara un objeto corsOptions para contener la configuración personalizada de CORS.
 // establece una función para determinar si una solicitud CORS debe ser permitida o denegada en función del origen de la solicitud.
 // Cors: whitelist (lista blanca de servidores que pueden acceder). 
@@ -60,11 +56,14 @@ const corsOptions = {
   //solo las rutas que esten dentro de origin se va a poder conectar
   origin: 'http://127.0.0.1:5500',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true  
-}
+  credentials: true,
+  allowedHeaders: ['Content-Type']
+ }
 
 // Se aplica el middleware CORS con opciones personalizadas.
 app.use(cors(corsOptions));
+
+
 //ruta para verificar el funcionamiento de cors
 // Defino una ruta GET llamada '/bienvenida'
 app.get('/bienvenida', (req, res) => {

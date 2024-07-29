@@ -25,8 +25,7 @@ loginForm.addEventListener('submit', async (event) => {
             method: 'POST',
             headers: {
                 // Indica que el cuerpo de la solicitud está en formato JSON
-             'Content-Type': 'application/json',
-               // 'Authorization': `Bearer ${token}`
+             'Content-Type': 'application/json',         
               
             },
             body: JSON.stringify({ email, password }),
@@ -35,7 +34,14 @@ loginForm.addEventListener('submit', async (event) => {
         if (!response.ok) {
             // Lanza un error si la respuesta no es exitosa
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Network response was not ok');
+
+            Swal.fire({
+                title: 'Error!',
+                text: errorData.error || 'Credenciales incorrectas.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return; 
         }
         // Convierte la respuesta a JSON
         const data = await response.json();
@@ -44,7 +50,7 @@ loginForm.addEventListener('submit', async (event) => {
 
         // Maneja la respuesta del servidor
         // Verifica si el login fue exitoso
-        if (data.success) {
+        if (data.token) {
              // Guarda el token en localStorage
              localStorage.setItem('token', data.token);
             // Muestra una alerta de éxito utilizando SweetAlert2

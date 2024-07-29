@@ -1,7 +1,33 @@
 
 import { userModel } from "../models/user.js";// Utiliza destructuración para importar
 import { sendEmailChangePassword } from "../utils/nodemailer.js";
-import {generateToken} from "../utils/jwt.js"
+import { generateToken } from "../utils/jwt.js"
+
+
+// inicio REGISTRO....................
+
+// Función asíncrona para registrar un nuevo usuario.
+export const register = async (req, res) => {
+    try {
+        // Verifica si no hay usuario autenticado.
+        if (!req.user) {
+            //SI NO HAY USUARIO AUTENTICADO, devuelve un código de estado 400 (Bad Request) con un mensaje de error.
+            return res.status(400).json("Usuario ya existente en la aplicación");
+        }
+
+        // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha creado correctamente.
+        res.status(200).json("Usuario creado correctamente");
+
+    } catch (e) {
+        // Si ocurre un error durante el registro, envía un mensaje de error con un código de estado 500 (Internal Server Error).
+        res.status(500).json("Error al registrar usuario");
+    }
+}
+
+// fin REGISTRO....................
+
+
+
 
 // inicio INICIO DE SESION....................
 
@@ -15,28 +41,31 @@ export const login = async (req, res) => {
             return res.status(401).json({ error: "Usuario o contraseña no válidos" });
         }
 
-          // Genera el token JWT para el usuario autenticado
-          const token = generateToken(req.user);
-       
-console.log(token)
-//console.log('Encabezados de la solicitud:', req.headers);
+        // Genera el token JWT para el usuario autenticado
+        const token = generateToken(req.user);
+
+        console.log(token)
+        //console.log('Encabezados de la solicitud:', req.headers);
         // Establece la información del usuario en la sesión.
         req.session.user = {
             email: req.user.email,
             name: req.user.name,
             //rol: user.rol
-          
+
         }
 
         // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha logueado correctamente.
-        res.status(200).json({ message: "Usuario logueado correctamente" });
+        res.status(200).json({
+            message: "Usuario logueado correctamente",
+            token: token // Devolver el token en la respuesta
+        });
 
 
     } catch (e) {
         // Si ocurre un error durante el inicio de sesión, envía un mensaje de error con un código de estado 500 (Internal Server Error).
         res.status(500).json({ error: "Error al loguear usuario" });
 
-        
+
     }
 }
 //fin INICIO DE SESION....................
@@ -66,44 +95,13 @@ export const current = async (req, res) => {
         res.status(500).json("Error al verificar usuario actual");
     }
 }
-
 // fin CURRENT: verificación de usuario....................
 
 
 
 
 
-
-// inicio REGISTRO....................
-
-// Función asíncrona para registrar un nuevo usuario.
-export const register = async (req, res) => {
-    try {
-        // Verifica si no hay usuario autenticado.
-        if (!req.user) {
-            //SI NO HAY USUARIO AUTENTICADO, devuelve un código de estado 400 (Bad Request) con un mensaje de error.
-            return res.status(400).json("Usuario ya existente en la aplicación");
-        }
-
-        // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha creado correctamente.
-        res.status(200).json("Usuario creado correctamente");
-
-    } catch (e) {
-        // Si ocurre un error durante el registro, envía un mensaje de error con un código de estado 500 (Internal Server Error).
-        res.status(500).json("Error al registrar usuario");
-    }
-}
-
-// fin REGISTRO....................
-
-
-
-
-
-
-
 // inicio LOGOUT (desloguearse: cerrar sesion)....................
-
 //ADEMAS DE DESTRUIR LA SESION PUEDO LLAMAR AL MODULO de userModel (desafio 4ºpractica integradora)
 
 //Función asíncrona para cerrar sesión de un usuario.
@@ -128,7 +126,6 @@ export const logout = async (req, res) => {
         }
     })
 }
-
 // fin LOGOUT....................
 
 
@@ -137,7 +134,6 @@ export const logout = async (req, res) => {
 
 
 // inicio RUTA GITHUB....................
-
 // Función asíncrona para manejar la sesión de GitHub.
 export const sessionGithub = async (req, res) => {
     // Establece la información del usuario obtenida de GitHub en la sesión.
@@ -148,12 +144,7 @@ export const sessionGithub = async (req, res) => {
     // Redirige al usuario a la página de inicio.
     res.redirect('/')
 }
-
 // fin RUTA GITHUB....................
-
-
-
-
 
 
 
@@ -175,12 +166,7 @@ export const testJWT = async (req, res) => {
 
 
 
-
-
-
 // inicio RECUPERACION DE CONTRASEÑA PARA INGRESAR....................
-
-
 
 // Exporta la función asíncrona changePassword, maneja la solicitud del cambio de contraseña, cuando se hace click en esta ruta.
 export const changePassword = async (req, res) => {
@@ -254,8 +240,5 @@ export const sendEmailPassword = async (req, res) => {
         res.status(500).send(e)
     }
 }
-
-
-
 
 // fin RECUPERACION DE CONTRASEÑA PARA INGRESAR....................
