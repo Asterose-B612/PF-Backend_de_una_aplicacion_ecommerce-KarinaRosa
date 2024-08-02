@@ -100,6 +100,7 @@ deleteInactiveUsersLink.addEventListener('click', async (event) => {
       // Hacer una solicitud DELETE a la API para eliminar los usuarios inactivos
       const response = await fetch('http://localhost:8000/api/users', {
           method: 'DELETE'
+          
       });
       console.log('Respuesta del servidor:', response);
       if (!response.ok) {

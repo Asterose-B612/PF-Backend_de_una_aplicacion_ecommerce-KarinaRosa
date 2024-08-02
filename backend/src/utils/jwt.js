@@ -14,6 +14,7 @@ export const generateToken = (user) => {
    return token
 }
 
+
 //varenv.jwt_secret
 /*
 // Ejemplo de uso y prueba
@@ -28,9 +29,9 @@ console.log(generateToken({
     "__v": 0
 }))*/
 
-/*
+
  //para proteger rutas después del login
- 
+ /*
 export function authenticateToken(req, res, next) {
     const token = req.header('Authorization').replace('Bearer ', '');
     if (!token) {
@@ -44,8 +45,8 @@ export function authenticateToken(req, res, next) {
     } catch (err) {
         res.status(400).send({ error: 'Invalid token' });
     }
-}*/
-
+}
+*/
 
 //middleware para AUTENTICAL EL ROL
 

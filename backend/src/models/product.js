@@ -18,9 +18,14 @@ const productSchema = new Schema({
         required: true
     },
     
-    thumbnail: {
+   /* thumbnail: {
         default: []
-    },//Defino x defecto q sea un array vacío, q si no me ingresa el valor sea vacío.
+    },*///Defino x defecto q sea un array vacío, q si no me ingresa el valor sea vacío.
+    thumbnail: {
+        type: String,
+        required: true
+    },
+
     code: {
         type: String,
         unique: true,

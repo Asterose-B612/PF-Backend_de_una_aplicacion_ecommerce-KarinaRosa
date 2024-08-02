@@ -4,11 +4,12 @@
 // Importa el modelo de producto desde el archivo product.js en la carpeta models
 import productModel from "../models/product.js";
 import { createRandomProduct } from '../mockings.js/mockingProducts.js';
+//import { authenticateToken } from '../utils/jwt.js';
 
 
 // inicio OBTENER PRODUCTOS..............................
 export const getProducts = async (req, res) => {
-    console.log(req)
+    //console.log(req)
     try {
         const { limit, page, filter, ord } = req.query;
         let metFilter;
@@ -28,11 +29,10 @@ export const getProducts = async (req, res) => {
         const prods = await productModel.paginate(query, { limit: limi, page: pag, sort: ordQuery });
 
         res.status(200).send(prods)
+        console.log(prods)
 
-    } catch (error) {
-        res.status(500).render('templates/error', {
-            error: error,
-        });
+    } catch (e) {
+        res.status(500).send(`Error interno del servidor`, e)
     }
 }
 
@@ -66,11 +66,7 @@ export const getProducts = async (limit, page, filter, sort) => {
 
 
 
-
-
-
-
-// inicio OBTENER PRODUCTO..............................
+// inicio OBTENER UN PRODUCTO..............................
 
 export const getProduct = async (req, res) => {
     try {
@@ -83,40 +79,33 @@ export const getProduct = async (req, res) => {
     } catch (error) {
         res.status(500).send(`Error interno del servidor al consultar producto: ${error}`)
     }
-}
-// fin OBTENER PRODUCTO..............................
-
-
-
+}// fin OBTENER PRODUCTO..............................
 
 
 // inicio CREAR PRODUCTO .........................
 
-
-//export const createProduct define una función llamada createProduct que se exporta como una constante. Esto permite que la función sea importada y utilizada en otros archivos.
+// Exporta la función asíncrona "createProduct" que maneja la creación de un nuevo producto.
 export const createProduct = async (req, res) => {
-     //Esta línea imprime el objeto req.user en la consola. Se asume que req.user contiene información del usuario que ha hecho la solicitud, como su rol y otros detalles. Esto es útil para depurar.
-    console.log(req.user)   
-   console.log(req.user.rol)
-   //Manejo de Excepciones
-   //Si algo sale mal en el bloque try, el control se transfiere al bloque catch.
-
+    // Imprime en la consola la información del usuario que realiza la solicitud.
+    console.log(req.user)
+    // Imprime en la consola el rol del usuario.
+    console.log(req.user.rol)
+    
     try {
-       // verificación de rol de usuario (if (req.user.rol == "Admin")) para permitir solo a los administradores crear productos. Si el usuario no es un administrador, respondería con un estado 403 (Prohibido)
-    if (req.user.rol == "admin") {
-       // const product = req.body obtiene el cuerpo de la solicitud. (req.body), que debe contener los datos del producto que se va a crear.
+        // Verifica si el rol del usuario es "Admin".
+        if (req.user && req.user.rol === "admin") {
+            // Obtiene los datos del producto del cuerpo de la solicitud.
             const product = req.body
-            //const mensaje = await productModel.create(product) usa await para esperar la resolución de la promesa devuelta por productModel.create(product). Esta función probablemente guarda el producto en una base de datos y devuelve una respuesta.
+            // Utiliza el modelo de producto para crear un nuevo producto en la base de datos y guarda el mensaje de respuesta.
             const mensaje = await productModel.create(product)
-            //Si la creación del producto es exitosa, responde con un estado 201 (Creado) y envía el mensaje de confirmación.
+            // Envía una respuesta exitosa con el mensaje de creación del producto.
             res.status(201).send(mensaje)
-       } else {
-           res.status(403).send("Usuario no autorizado")
-      }
-
-
+        } else {
+            // Si el usuario no es "Admin", envía una respuesta de no autorizado.
+            res.status(403).send("Usuario no autorizado")
+        }
     } catch (error) {
-        //res.status(500).send(Error interno del servidor al crear producto: ${error}): Si ocurre un error, responde con un estado 500 (Error Interno del Servidor) y envía un mensaje detallando el erro
+        // Si ocurre un error, envía una respuesta de error del servidor con el mensaje del error.
         res.status(500).send(`Error interno del servidor al crear producto: ${error}`)
     }
 }
@@ -124,29 +113,93 @@ export const createProduct = async (req, res) => {
 // fin CREAR PRODUCTO .........................
 
 
+/*
 
 
+// inicio CREAR PRODUCTO .........................
 
+//export const createProduct define una función llamada createProduct que se exporta como una constante. Esto permite que la función sea importada y utilizada en otros archivos.
+export const createProduct = async (req, res) => {
+    // Esta línea imprime el objeto req.user en la consola. Se asume que req.user contiene información del usuario que ha hecho la solicitud, como su rol y otros detalles. Esto es útil para depurar.
+    console.log(req.user)
+    console.log(req.user.rol)
+    
+    // Manejo de Excepciones
+    // Si algo sale mal en el bloque try, el control se transfiere al bloque catch.
+    try {
+        // verificación de rol de usuario (if (req.user.rol == "Admin")) para permitir solo a los administradores crear productos. Si el usuario no es un administrador, respondería con un estado 403 (Prohibido)
+        if (req.user && req.user.rol === "admin") {
+            // const product = req.body obtiene el cuerpo de la solicitud. (req.body), que debe contener los datos del producto que se va a crear.
+            const { title, description, price, code, stock, category } = req.body
+            const thumbnail = req.file;
+            // Verificar que todos los campos requeridos estén presentes
+            if (!title || !description || !price || !code || !stock || !category) {
+                return res.status(400).json({
+                    status: "error",
+                    message: "Faltan campos obligatorios"
+                });
+            }
+            
+            // const newProduct = await productModel.create(product) usa await para esperar la resolución de la promesa devuelta por productModel.create(product). Esta función probablemente guarda el producto en una base de datos y devuelve una respuesta.
+            const newProduct = await productModel.create(product)
+            
+            // Si la creación del producto es exitosa, responde con un estado 201 (Creado) y envía el mensaje de confirmación.
+            res.status(201).json({
+                status: "success",
+                message: "Producto creado con éxito",
+                data: newProduct
+            });
+        } else {
+            res.status(403).json({
+                status: "error",
+                message: "Usuario no autorizado"
+            });
+        }
+    } catch (error) {
+        // res.status(500).send(`Error interno del servidor al crear producto: ${error}`): Si ocurre un error, responde con un estado 500 (Error Interno del Servidor) y envía un mensaje detallando el error.
+        res.status(500).send(`Error interno del servidor al crear producto: ${error.message}`)
+    }
+}; // fin CREAR PRODUCTO
+
+*/
 
 // inicio ACTUALIZAR PRODUCTO EXISTENTE..........................................
 
 export const updateProduct = async (req, res) => {
     try {
-        if (req.user.rol == "admin") {
+        if (req.user && req.user.rol === "admin") {
             const idProducto = req.params.pid
             const updateProduct = req.body
-            const prod = await productModel.findByIdAndUpdate(idProducto, updateProduct)
-            res.status(200).send(prod)
+
+            const updatedProduct = await productModel.findByIdAndUpdate(idProducto, updateProduct, { new: true });
+
+
+         if (!updatedProduct) {
+                return res.status(404).json({
+                    status: "error",
+                    message: "Producto no encontrado"
+                });
+            }
+
+            res.status(200).json({
+                status: "success",
+                message: "Producto actualizado con éxito",
+                data: updatedProduct,
+                rol: req.user.rol
+            });
         } else {
-            res.status(403).send("Usuario no autorizado")
+            res.status(403).json({
+                status: "error",
+                message: "Usuario no autorizado"
+            });
         }
     } catch (error) {
-        res.status(500).send(`Error interno del servidor al actualizar producto: ${error}`)
+        res.status(500).json({
+            status: "error",
+            message: `Error interno del servidor al actualizar producto: ${error.message}`
+        });
     }
-}
-// fin ACTUALIZAR PRODUCTO EXISTENTE..........................................
-
-
+};// fin ACTUALIZAR PRODUCTO EXISTENTE..........................................
 
 
 
@@ -154,32 +207,45 @@ export const updateProduct = async (req, res) => {
 
 // inicio ElIMINAR PRODUCTO EXISTENTE x su id .........................
 
-
 export const deleteProduct = async (req, res) => {
     try {
         console.log(req.user.rol)
-        if (req.user.rol == "admin") {
+        // Verifica el rol del usuario autenticado
+        if (req.user && req.user.rol === "admin") {
             const idProducto = req.params.pid
             const mensaje = await productModel.findByIdAndDelete(idProducto)
-            res.status(200).send(mensaje)
+
+            // Verifica si el producto fue encontrado y eliminado
+            if (!mensaje) {
+                return res.status(404).json({
+                    status: "error",
+                    message: "Producto no encontrado"
+                });
+            }
+            // Responde con éxito si la eliminación fue exitosa
+            res.status(200).json({
+                status: "success",
+                message: "Producto eliminado con éxito",
+                data: mensaje,
+                rol: req.user.rol
+            });
         } else {
-            res.status(403).send("Usuario no autorizado")
+            res.status(403).json({
+                status: "error",
+                message: "Usuario no autorizado"
+            });
         }
     } catch (error) {
-        res.status(500).send(`Error interno del servidor al eliminar producto: ${error}`)
+        res.status(500).json({
+            status: "error",
+            message: `Error interno del servidor al eliminar producto: ${error.message}`
+        });
     }
-}
-// fin ElIMINAR PRODUCTO EXISTENTE x su id .........................
-
-
-
-
-
+};// fin ElIMINAR PRODUCTO EXISTENTE x su id .........................
 
 
 
 // inicio GENERAR PRODUCTOS ALEATORIOS .........................
-
 
 export const generateRandomProducts = () => {
     const products = [];
@@ -187,8 +253,4 @@ export const generateRandomProducts = () => {
         products.push(createRandomProduct());
     }
     return products;
-};
-
-
-
-// inicio GENERAR PRODUCTOS ALEATORIOS .........................
+};// inicio GENERAR PRODUCTOS ALEATORIOS .........................

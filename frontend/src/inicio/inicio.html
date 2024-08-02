@@ -12,7 +12,11 @@
     <link rel="icon" type="image/x-icon" href="./assets/images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2dd84c4f23.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./inicio.css">
+       <!--  Archivos css--> 
+    <link rel="stylesheet" href="./css/inicio.css">
+    <link rel="stylesheet" href="./css/inicioProducts.css">
+    <!--css de animacion  <link rel="stylesheet" href="./css/gato.css">-->
+    <link rel="stylesheet" href="./css/destello.css">
 </head>
 
 <body>
@@ -26,7 +30,7 @@
                     <p>Un lugar sin fronteras<br> para conquistar el mundo</p>
                 </div>
                 <a href="./nosotros.html">
-                    <button id="btnConocenos">Conocenos</button>
+                <!--   <button id="btnConocenos">Conocenos</button>--> 
                 </a>
             </div>
         </div>
@@ -34,9 +38,12 @@
 
     <div id="navbar">
         <nav class="navbar__links">
-            <a href="./contact.html">Contact</a>
-            <a href="./about.html">About Us</a>
-            <a href="../login/login.html" id="navbar__login">Iniciar sesión</a>
+            <a href="./contact.html">Contacto</a>
+            <a href="./about.html">Nosotros</a>
+            <a href="../login/login.html"><i class="fa-solid fa-user" id="navbar__login"></i>
+            </a>  
+
+            </a>
             <div id="container_cart">
                 <a href="../cart/cart.html">
                     <i class="fas fa-cart-shopping" id="cart"></i>
@@ -46,13 +53,22 @@
     </div>
 
     <main>
-        <div id="products-container"></div>
+        <div id="gato"></div>
+        <div id="products-container">
+
+
+
+
+
+        </div>
     </main>
 
 
     <footer></footer>
+    <script src="./destello.js"></script>
+       <!-- js de animacion <script src="./gato.js"></script>-->
     <script src="./inicio.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

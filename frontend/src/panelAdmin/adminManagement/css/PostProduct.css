@@ -1,0 +1,57 @@
+/* Estilos generales para el formulario */
+#mainContent {
+    padding: 20px;
+    background-color: #f8f8f8; /* Fondo gris claro */
+    border-radius: 8px;
+  }
+  
+  #mainContent form {
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  #mainContent h2 {
+    color: #333333; /* Texto oscuro para el título */
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555555; /* Color de texto gris oscuro */
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #cccccc; /* Borde gris claro */
+    border-radius: 4px;
+  }
+  
+  .form-group textarea {
+    height: 100px;
+  }
+  
+  button {
+    background-color: #007bff; /* Color de fondo azul */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Color de fondo azul oscuro en hover */
+  }
+  

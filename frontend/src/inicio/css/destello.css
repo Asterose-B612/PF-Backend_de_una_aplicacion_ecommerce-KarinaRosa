@@ -1,0 +1,120 @@
+
+/*HUMO..........................................*/
+
+
+/* Estilo para el humo rosa */
+#humo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 182, 193, 0.4); /* Ajusta el color y la opacidad según sea necesario */
+    z-index: 4; /* Asegúrate de que esté por delante de otros elementos */
+    pointer-events: none; /* Evita que el humo rosa interfiera con los clics */
+}
+
+/* Estilo de las chispa */
+.spark {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(255, 182, 193, 1) 0%, rgba(255, 182, 193, 0) 80%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fade 0.5s forwards;
+}
+
+/* Animación de las chispa */
+@keyframes fade {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(5);
+        opacity: 0;
+    }
+}
+
+
+
+/*LUCES.......................*/
+/* glow.css */
+.glow {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle, rgba(255,182,193,0.5) 0%, rgba(255,182,193,0) 80%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: scale(0);
+    animation: glow-animation 0.5s forwards;
+}
+
+@keyframes glow-animation {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+
+
+/*PARTICULAS FLOTANTES/*
+/* particles.css */
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 105, 180, 0.8); /* Rosa */
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 2s infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-20px) scale(0.8);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+
+/*LUMINICENCIA*//* luminescence.css */
+.luminous {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, rgba(255, 192, 203, 0.8), rgba(255, 105, 180, 0.4));
+    border-radius: 50%;
+    pointer-events: none;
+    animation: slide 2s infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-50%) translateY(-50%);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateX(50%) translateY(50%);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%);
+        opacity: 0.8;
+    }
+}

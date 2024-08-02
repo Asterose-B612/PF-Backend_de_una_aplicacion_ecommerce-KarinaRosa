@@ -1,0 +1,13 @@
+ body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #gato {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-image: url('../img/gato.png');
+      background-size: cover;
+      transition: transform 0.1s;
+    }

@@ -1,9 +1,8 @@
 // Importa el modelo 'cartModel' desde el archivo '../models/cart.js'
 import cartModel from "../models/cart.js";
-// Importa el modelo 'productModel' desde el archivo '../models/product.js'
 import productModel from "../models/product.js";
 import ticketModel from "../models/ticket.js";
-
+import crypto from 'crypto';
 
 
 //*******inicio OBTENER UN CARRITO POR SU ID******************
@@ -56,7 +55,7 @@ export const createCart = async (req, res) => {
 export const insertProductCart = async (req, res) => {
     try {
         // Verifica si el usuario tiene permisos de 'User'
-        if (req.user.rol == "User") {
+        if (req.user && req.user.rol === "User") {
             // Obtiene el ID del carrito y el ID del producto desde los parámetros de la solicitud
             const cartId = req.params.cid;
             const productId = req.params.pid;
@@ -69,8 +68,9 @@ export const insertProductCart = async (req, res) => {
             const indice = cart.products.findIndex(product => product.id_prod == productId);
 
             // Si el producto ya está en el carrito, actualiza la cantidad
+            //+= asegura de que se está sumando la cantidad en lugar de sobrescribirla si el producto ya está en el carrito.
             if (indice != -1) {
-                cart.products[indice].quantity = quantity;
+                cart.products[indice].quantity += quantity;
             } else {
                 // Si el producto no está en el carrito, lo añade con la cantidad especificada
                 cart.products.push({ id_prod: productId, quantity: quantity });
@@ -108,46 +108,58 @@ export const createTicket = async (req, res) => {
         const prodSinStock = [];
         // Verifica si el carrito existe
         if (cart) {
-            // Itera sobre los productos del carrito
-            cart.products.forEach(async (prod) => {
+            // Itera sobre los productos del carrito usando un bucle for...of para manejar correctamente las promesas
+            for (const prod of cart.products) {
                 // Busca el producto en la base de datos por su ID
                 let producto = await productModel.findById(prod.id_prod);
                 // Verifica si hay suficiente stock del producto en el inventario
-                if (producto.stock - prod.quantity < 0) {
+                if (producto.stock < prod.quantity) {
                     // Si no hay suficiente stock, agrega el producto a la lista de productos sin stock
                     prodSinStock.push(producto);
                 }
+            }
+        }else {
+              // Si el carrito no existe, envía un mensaje de error al cliente con un código de estado 404 (Not Found)
+              return res.status(404).send("Carrito no existe");
+        }
+
+        // Si no hay productos sin stock, finaliza la compra
+        if (prodSinStock.length === 0) {
+            // Calcula el precio total de los productos en el carrito
+            // reduce() recorre el array de productos y acumula el resultado de la multiplicación del precio y la cantidad de cada producto
+            /*const totalPrice = cart.products.reduce((a, b) => (a.price * a.quantity) + (b.price * b.quantity), 0);*/
+            const totalPrice = cart.products.reduce((total, prod) => {
+                return total + (prod.quantity * prod.price);
+            }, 0);
+
+
+            // Genera un nuevo ticket
+            const newTicket = await ticketModel.create({
+                // code: genera un identificador único para el ticket usando la función randomUUID() de crypto
+                code: crypto.randomUUID(),
+                // purchaser: almacena el correo electrónico del usuario que realiza la compra, obtenido de req.user.email
+                purchaser: req.user.email,
+                // amount: asigna el totalPrice calculado anteriormente como el monto total del ticket
+                amount: totalPrice,
+                // products: incluye el array de productos del carrito en el ticket
+                products: cart.products
             });
-            // Si no hay productos sin stock, finaliza la compra
-            if (prodSinStock.length == 0) {
-                // Calcula el precio total de los productos en el carrito
-                // reduce() recorre el array de productos y acumula el resultado de la multiplicación del precio y la cantidad de cada producto
-                const totalPrice = cart.products.reduce((a, b) => (a.price * a.quantity) + (b.price * b.quantity), 0);
 
-                // Genera un nuevo ticket
-                const newTicket = await ticketModel.create({
-                    // code: genera un identificador único para el ticket usando la función randomUUID() de crypto
-                    code: crypto.randomUUID(),
-                    // purchaser: almacena el correo electrónico del usuario que realiza la compra, obtenido de req.user.email
-                    purchaser: req.user.email,
-                    // amount: asigna el totalPrice calculado anteriormente como el monto total del ticket
-                    amount: totalPrice,
-                    // products: incluye el array de productos del carrito en el ticket
-                    products: cart.products
-                });
-
-                // Responde al cliente con el nuevo ticket y un código de estado 200 (OK)
-                res.status(200).send(newTicket);      
+            // Responde al cliente con el nuevo ticket y un código de estado 200 (OK)
+            res.status(200).send(newTicket);
         } else {
             // Si hay productos sin stock, retorna la lista de productos sin stock al cliente
-        }
-    } else {
+      
+  
         // Si el carrito no existe, envía un mensaje de error al cliente con un código de estado 404 (Not Found)
-        res.status(404).send("Carrito no existe");
-    }
-} catch (e) {
+        res.status(400).send({ 
+            message: "Algunos productos no tienen suficiente stock", 
+            products: prodSinStock 
+        })
+ }
+    } catch (e) {
     // Si ocurre un error, envía un mensaje de error al cliente con un código de estado 500 (Internal Server Error)
-    res.status(500).send(e);
+    res.status(500).send(`Error interno del servidor al crear ticket: ${e.message}`);
 }
 }
 // fin CREAR TICKET DE COMPRA***********

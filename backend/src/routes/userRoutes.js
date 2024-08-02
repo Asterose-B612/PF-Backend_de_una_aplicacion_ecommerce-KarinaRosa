@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers, sendDocuments, deleteInactiveUsers, getUserById, deleteUserById } from "../controllers/userController.js";
+import { getUsers, sendDocuments, deleteInactiveUsers, getUserById, deleteUserById ,} from "../controllers/userController.js";
 
 
 /*crea un enrutador en Express.js para manejar las solicitudes relacionadas con las operaciones de usuario en la aplicación web.*/

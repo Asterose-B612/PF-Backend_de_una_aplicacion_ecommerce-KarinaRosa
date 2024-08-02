@@ -1,5 +1,6 @@
 import multer from 'multer';
 import { __dirname } from "../path.js";
+
 //CONFIGURACIONES PARA ALMACENAMIENTOS DE IMAGENES DE ....
 //PRODUCTOS
 const STORAGEPRODUCTS = multer.diskStorage({
@@ -7,12 +8,18 @@ const STORAGEPRODUCTS = multer.diskStorage({
     destination: (req, file, callback) => {
         //Trabajo con una funcion.  Llama al callback sin errores y especifica la carpeta de destino donde se almacenan las imágenes
         callback(null, `${__dirname}/public/img/products`)
+        console.log(__dirname);
+
         //null no hubo error y ruta donde alojo las imagenes
     },
     // Define el nombre de archivo como una marca de tiempo seguida del nombre original
-    filename: (req, file, cb) => {
+    filename: (req, file, callback) => {
+
+        const uniqueSuffix = Date.now() + path.extname(file.originalname); // Generar un nombre único
+        callback(null, file.fieldname + '-' + uniqueSuffix); // Nombre del archivo
+
         // Llama al callback sin errores y establece el nombre del archivo utilizando una marca de tiempo seguida del nombre original del archivo
-        cb(null, `${Date.now()}${file.originalname}`);
+       // cb(null, `${Date.now()}${file.originalname}`);
     }
 });
 
@@ -29,9 +36,9 @@ const STORAGEDOCS = multer.diskStorage({
     },
 
     // Define el nombre de archivo como una marca de tiempo seguida del nombre original
-    filename: (req, file, cb) => {
+    filename: (req, file, callback) => {
         // Llama al callback sin errores y establece el nombre del archivo utilizando una marca de tiempo seguida del nombre original del archivo
-        cb(null, `${file.originalname}`);
+        callback(null, `${file.originalname}`);
     }
 });
 
@@ -48,7 +55,7 @@ const STORAGEPROFILES = multer.diskStorage({
     // Define el nombre de archivo como una marca de tiempo seguida del nombre original
     filename: (req, file, cb) => {
         // Llama al callback sin errores y establece el nombre del archivo utilizando una marca de tiempo seguida del nombre original del archivo
-        cb(null, `${file.originalname}`);
+        callback(null, `${file.originalname}`);
     }
 });
 

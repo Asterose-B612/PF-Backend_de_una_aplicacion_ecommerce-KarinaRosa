@@ -11,62 +11,18 @@ const productsRouter = Router();
 
 //********METDOS GET: limit, page, sort asc/desc, query (filter)***************
 
-
 //Pruebas en Postman:http://localhost:8000/api/products?limit=2&page=1&sort=asc&filter=Smartphone
 
-
-
-
-// inicio OBTENER PRODUCTO  .............
-
+// OBTENER TODOS LOSPRODUCTOS  .............
 productsRouter.get('/', getProducts)
-
-// fin OBTENER PRODUCTO  .............
-
-
-
-
-
-// inicio OBTENER PRODUCTO  .............
-
+// OBTENER UN  PRODUCTO  .............
 productsRouter.get('/:pid', getProduct)
-
-// fin OBTENER PRODUCTO  .............
-
-
-
-
-
-
-// inicio CREAR PRODUCTO .........................
-
-//productsRouter.post('/', passport.authenticate('jwt', { session: false }), createProduct)
-productsRouter.post('/', createProduct)
-
-
-// fin CREAR PRODUCTO .........................
-
-
-
-
-
-
+// CREAR PRODUCTO .........................
+productsRouter.post('/',passport.authenticate('jwt', { session: false }), createProduct)
 // inicio ACTUALIZAR PRODUCTO EXISTENTE..........................................
-
 productsRouter.put('/:pid', passport.authenticate('jwt', { session: false }), updateProduct)
-
-// fin ACTUALIZAR PRODUCTO EXISTENTE..........................................
-
-
-
-
-
-
-
 // inicio ElIMINAR PRODUCTO EXISTENTE x su id .........................
-
 productsRouter.delete('/:pid', passport.authenticate('jwt', { session: false }), deleteProduct)
 
-// fin ElIMINAR PRODUCTO EXISTENTE x su id .........................
 
 export default productsRouter

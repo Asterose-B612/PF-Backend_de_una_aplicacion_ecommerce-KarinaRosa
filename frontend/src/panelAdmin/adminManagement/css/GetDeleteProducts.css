@@ -1,0 +1,64 @@
+/* adminManagement.css */
+
+/* Estilos generales para la tabla de productos */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .product-table thead {
+    background-color: #f4f4f4;
+  }
+  
+  .product-table th, .product-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .product-table th {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .product-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .product-table tbody tr:hover {
+    background-color: #e2e2e2;
+  }
+  
+  .product-table td button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .product-table td button:hover {
+    background-color: #0056b3;
+  }
+  
+  .product-table td button:first-child {
+    background-color: #28a745;
+  }
+  
+  .product-table td button:first-child:hover {
+    background-color: #218838;
+  }
+  
+  .product-table td button:last-child {
+    background-color: #dc3545;
+  }
+  
+  .product-table td button:last-child:hover {
+    background-color: #c82333;
+  }
+  

@@ -1,0 +1,166 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Integrar el navbar al header */
+header {
+    position: relative;
+    z-index: 1; /* Asegura que el navbar esté delante del header */
+}
+
+#divnavbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2; /* Se superpone al header */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para destacar */
+    border-bottom: 2px solid #ddd; /* Línea en la parte inferior del navbar */
+}
+
+.navbar_links {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar_links a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efecto de pestañas para las secciones deseadas */
+.navbar_links a.contact,
+.navbar_links a.about {
+    background-color: #dfb0d2; /* Color de la pestaña */
+    border-radius: 8px 8px 0 0; /* Bordes redondeados en la parte superior */
+    border: 2px solid #ddd; /* Borde para diferenciar la pestaña */
+    border-bottom: none; /* Eliminar borde inferior para crear el efecto de solapa */
+}
+
+.navbar_links a.contact:hover,
+.navbar_links a.about:hover {
+    background-color: #c79cb4; /* Color más oscuro al pasar el ratón */
+    color: white;
+}
+
+/* Estilos sin pestañas para otras secciones */
+.navbar_links a.login,
+.navbar_links a.cart {
+    background-color: transparent;
+    border: none;
+}
+
+#products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.product {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 15px;
+    width: calc(33% - 40px); /* 3 productos por fila con espacio */
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+    text-align: center; /* Centra el contenido dentro del producto */
+}
+
+.product:hover {
+    transform: scale(1.02);
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    color: #6f6676;
+    font-family :Verdana, Geneva, Tahoma, sans-serif
+}
+
+.product p {
+    font-size: 1rem;
+    color: #6d5d6b;
+    font-family :Verdana, Geneva, Tahoma, sans-serif
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra los controles de cantidad */
+    margin: 10px 0;
+}
+
+.quantity-btn {
+    background-color: #978898; /* Cambiado a gris */
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #ff00ae; /* Gris más oscuro al pasar el ratón */
+}
+
+.quantity {
+    font-size: 1rem;
+    margin: 0 10px;
+    width: 40px;
+    text-align: center;
+    background:  #4b5057;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.add-to-cart {
+    background-color: #dfb0d2; 
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.add-to-cart:hover {
+    background-color:  #685266;
+}
+
+@media (max-width: 768px) {
+    .product {
+        width: calc(50% - 20px); /* 2 productos por fila en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .product {
+        width: 100%; /* 1 producto por fila en pantallas muy pequeñas */
+    }
+}

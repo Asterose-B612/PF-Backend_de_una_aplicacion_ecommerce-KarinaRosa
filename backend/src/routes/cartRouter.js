@@ -11,24 +11,16 @@ const cartRouter = Router()
 
 
 // inicio CREAR CARRITO VACÍO******************
-
 //ruta para Postman: api/cart
-
 cartRouter.post('/', createCart)
-
 // fin CREAR CARRITO VACÍO******************
-
-
-
 
 
 
 // inicio OBTENER UN CARRITO POR SU ID******************
 
 //ruta para Postman: api/cart/idDelCarrito
-
 cartRouter.get('/:cid', getCart)
-
 // fin OBTENER UN CARRITO POR SU ID******************
 
 
@@ -59,7 +51,7 @@ cartRouter.post('/:cid/purchase', createTicket);
 
 //Postman: http://localhost:8000/api/cart/idCARRITO/products/idPRODUCTO
 
-/*
+
 cartRouter.delete('/:cid/products/:pid', async (req, res) => {
     try {
          // Paso 1: Obtener el ID del carrito y del producto desde los parámetros de la solicitud.     
@@ -186,7 +178,7 @@ cartRouter.delete('/:cid', async (req, res) => {
 
 
 
-
+/*
 
 
 //********VISUALIZAR UN CARRITO ESPECIFICO*****

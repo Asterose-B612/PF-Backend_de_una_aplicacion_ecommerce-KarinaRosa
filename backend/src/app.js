@@ -57,7 +57,7 @@ const corsOptions = {
   origin: 'http://127.0.0.1:5500',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'Authorization']
  }
 
 // Se aplica el middleware CORS con opciones personalizadas.
