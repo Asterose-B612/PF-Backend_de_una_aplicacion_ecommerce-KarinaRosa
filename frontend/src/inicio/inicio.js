@@ -5,20 +5,21 @@ document.addEventListener('DOMContentLoaded', () => {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
-        console.log(data); // Imprime los datos recibidos
+        console.log(data);
 
-        // Verifica si data.docs es un array
         if (Array.isArray(data.docs)) {
             const container = document.getElementById('products-container');
-            
-            // Define la ruta base para las imágenes
-            const imageBaseUrl = 'http://localhost:8000/img/products/'; // Ruta base a la carpeta de imágenes
-            
+            const imageBaseUrl = 'http://localhost:8000/img/products/';
             container.innerHTML = data.docs.map(product => {
                 const imageUrl = `${imageBaseUrl}${product.thumbnail}`;
-                console.log(`Image URL: ${imageUrl}`); // Imprime la URL de la imagen
+                console.log(`Image URL: ${imageUrl}`);
 
                 return `
                     <div class="product">
@@ -36,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }).join('');
 
-            // Event listeners for quantity controls and add-to-cart buttons
             document.querySelectorAll('.quantity-btn').forEach(button => {
                 button.addEventListener('click', handleQuantityChange);
             });
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Handle quantity change
 function handleQuantityChange(event) {
     const button = event.target;
     const action = button.getAttribute('data-action');
@@ -81,53 +80,68 @@ function handleQuantityChange(event) {
 
     quantityElement.textContent = quantity;
 }
-
-// Handle add to cart.AGREGAR AL CARRITO
-
+//AGREGAR AL CARRITO
 function handleAddToCart(event) {
+    // Obtiene el botón que fue clickeado
     const button = event.target;
+
+    // Obtiene el ID del producto desde el atributo 'data-id' del botón
     const productId = button.getAttribute('data-id');
+
+    // Obtiene la cantidad seleccionada para el producto desde el elemento HTML
     const quantity = parseInt(document.getElementById(`quantity-${productId}`).textContent);
 
-    if (quantity > 0) {
-                // Obtener token del localStorage o estado de autenticación
-        // Get the cart from localStorage or initialize it if it doesn't exist
-        
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-            Swal.fire({
-                title: 'Error',
-                text: 'Please log in to add items to the cart.',
-                icon: 'error',
-                confirmButtonText: 'Log In',
-                confirmButtonColor: '#3085d6',
-                cancelButtonText: 'Cancel',
-                cancelButtonColor: '#d33',
-                showCancelButton: true,
-                preConfirm: () => {
-                    // Redirige al usuario a la página de login
-                    window.location.href = '../login/login.html';
-                }
-            });
-            return;
-        }
-        
-        //hago la peticion
-        fetch('http://localhost:8000/api/cart/add', {
-            method: 'POST',
+    // Obtiene el token de autenticación del almacenamiento local
+    const token = localStorage.getItem('token');
+
+    // Obtiene el ID del carrito desde el almacenamiento local
+    const cartId = localStorage.getItem('cart_id');
+
+    // Verifica si el token de autenticación no está presente
+    if (!token) {
+        // Muestra una alerta usando SweetAlert2 para pedir al usuario que inicie sesión
+        Swal.fire({
+            title: 'Error',
+            text: 'Please log in to add items to the cart.',
+            icon: 'error',
+            confirmButtonText: 'Log In',
+            confirmButtonColor: '#3085d6',
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
+            preConfirm: () => {
+                // Redirige al usuario a la página de inicio de sesión
+                window.location.href = '../login/login.html';
+            }
+        });
+        return; // Sale de la función si el usuario no está autenticado
+    }
+
+    // Verifica si la cantidad es mayor a 0 y si el ID del carrito está presente
+    if (quantity > 0 && cartId) {
+        // Realiza una solicitud POST para agregar el producto al carrito
+        fetch(`http://localhost:8000/api/cart/${cartId}/products/${productId}`, {
+            method: 'POST', // Método HTTP usado para la solicitud
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json', // Tipo de contenido de la solicitud
+                'Authorization': `Bearer ${token}` // Token de autenticación para la solicitud
             },
-            body: JSON.stringify({ productId, quantity })
+            body: JSON.stringify({ quantity: quantity }) // Cuerpo de la solicitud con la cantidad en formato JSON
         })
-        
-        .then(response => response.json())
+        .then(response => {
+            // Verifica si la respuesta de la red es exitosa
+            if (!response.ok) {
+                throw new Error('Network response was not ok'); // Lanza un error si la respuesta no es exitosa
+            }
+            return response.json(); // Convierte la respuesta en JSON
+        })
         .then(result => {
+            // Verifica si la respuesta del servidor indica éxito
             if (result.success) {
-                // Reset quantity display
+                // Reinicia la cantidad del producto a 0 en la interfaz
                 document.getElementById(`quantity-${productId}`).textContent = '0';
                 
+                // Muestra una alerta de éxito usando SweetAlert2
                 Swal.fire({
                     title: 'Success!',
                     text: `Added ${quantity} items to cart.`,
@@ -135,6 +149,7 @@ function handleAddToCart(event) {
                     confirmButtonText: 'OK'
                 });
             } else {
+                // Muestra una alerta de error si la respuesta del servidor indica fallo
                 Swal.fire({
                     title: 'Error',
                     text: result.message || 'Unable to add item to cart.',
@@ -144,6 +159,7 @@ function handleAddToCart(event) {
             }
         })
         .catch(error => {
+            // Captura errores de la solicitud y muestra una alerta
             console.error('Error adding to cart:', error);
             Swal.fire({
                 title: 'Error',
@@ -153,6 +169,7 @@ function handleAddToCart(event) {
             });
         });
     } else {
+        // Muestra una alerta si no se ha seleccionado una cantidad
         Swal.fire({
             title: 'Error',
             text: 'Please select a quantity before adding to cart.',
@@ -160,11 +177,4 @@ function handleAddToCart(event) {
             confirmButtonText: 'OK'
         });
     }
-}  
-        
-        
-        
-        
-        
-      
-   
+}

@@ -30,7 +30,7 @@ cartRouter.get('/:cid', getCart)
 // inicio AGREGAR UN PRODUCTO A UN CARRITO ESPECÍFICO***********
 
 /// Se espera el ID del carrito (:cid) y el ID del producto (:pid) como parámetros en la URL. Utiliza el middleware de autenticación JWT para verificar la identidad del usuario. Luego, llama a la función 'insertProductCart' para insertar el producto en el carrito.
-cartRouter.post('/:cid/:pid', passport.authenticate('jwt', { session: false }), insertProductCart);
+cartRouter.post('/:cid/products/:pid', passport.authenticate('jwt', { session: false }), insertProductCart);
 
 // fin AGREGAR UN PRODUCTO A UN CARRITO ESPECÍFICO***********
 
@@ -178,7 +178,7 @@ cartRouter.delete('/:cid', async (req, res) => {
 
 
 
-/*
+
 
 
 //********VISUALIZAR UN CARRITO ESPECIFICO*****
@@ -200,7 +200,7 @@ cartRouter.get('/:cid', async (req, res) => {
         res.status(500).send(`Error interno del servidor al obtener el carrito específico: ${error}`);
     }
 });
-*/
+
 
 // Exporta el router cartRouter para su uso en otras partes de la aplicación.
 export default cartRouter;

@@ -3,7 +3,7 @@ import cartModel from "../models/cart.js";
 import productModel from "../models/product.js";
 import ticketModel from "../models/ticket.js";
 import crypto from 'crypto';
-
+import { isValidObjectId } from 'mongoose'; 
 
 //*******inicio OBTENER UN CARRITO POR SU ID******************
 
@@ -13,7 +13,17 @@ export const getCart = async (req, res) => {
         // Obtiene el ID del carrito desde los parámetros de la solicitud
         const cartId = req.params.cid;
         // Busca un carrito en la base de datos por su ID
+//agregado extra de validacion desde Mongo Db
+        if (!isValidObjectId(cartId)) {
+            return res.status(400).send('ID de carrito inválido');
+        }
+
         const cart = await cartModel.findOne({ _id: cartId });
+
+        if (!cart) {
+            return res.status(404).send('Carrito no encontrado');
+        }
+
         // Envía el carrito encontrado como respuesta al cliente con un código de estado 200 (OK)
         res.status(200).send(cart);
     } catch (error) {
@@ -41,21 +51,18 @@ export const createCart = async (req, res) => {
         // Si ocurre un error, envía un mensaje de error al cliente con un código de estado 500 (Internal Server Error)
         res.status(500).send(`Error interno del servidor al crear carrito: ${error}`);
     }
-}
-
-//  fin CREAR CARRITO VACÍO******************
+}//  fin CREAR CARRITO VACÍO******************
 
 
 
-
+//CODIGO PROFESOR
 
 // inicio INSERTAR PRODUCTO EN CARRITO***********
-
 // Función asíncrona para insertar un producto en un carrito
 export const insertProductCart = async (req, res) => {
     try {
         // Verifica si el usuario tiene permisos de 'User'
-        if (req.user && req.user.rol === "User") {
+        if(req.user && (req.user.rol === "User" || req.user.rol === "premiun")) {
             // Obtiene el ID del carrito y el ID del producto desde los parámetros de la solicitud
             const cartId = req.params.cid;
             const productId = req.params.pid;
@@ -64,19 +71,25 @@ export const insertProductCart = async (req, res) => {
             // Busca el carrito en la base de datos por su ID
             const cart = await cartModel.findById(cartId);
 
+            if (!cart) {
+                return res.status(404).send("Carrito no encontrado");
+            }
+
+
             // Encuentra el índice del producto en el carrito
             const indice = cart.products.findIndex(product => product.id_prod == productId);
 
             // Si el producto ya está en el carrito, actualiza la cantidad
-            //+= asegura de que se está sumando la cantidad en lugar de sobrescribirla si el producto ya está en el carrito.
-            if (indice != -1) {
-                cart.products[indice].quantity += quantity;
+            if (indice !== -1) {
+                cart.products[indice].quantity = quantity;
             } else {
                 // Si el producto no está en el carrito, lo añade con la cantidad especificada
                 cart.products.push({ id_prod: productId, quantity: quantity });
             }
             // Actualiza el carrito en la base de datos con los cambios realizados
-            const mensaje = await cartModel.findByIdAndUpdate(cartId, cart);
+            //Actualizar solo el campo products evita sobrescribir campos importantes que podrían ser necesarios para la sesión del usuario, evitando así problemas que podrían llevar a un comportamiento errático o a la eliminación de datos como el token.Impacto en el Token: Si la actualización incorrecta afecta a los datos relacionados con el usuario (como el estado de sesión), podría provocar que el usuario sea desconectado o que el token se vuelva inválido, resultando en un loop de reautenticación.
+            const mensaje = await cartModel.findByIdAndUpdate(cartId, { products: cart.products }, { new: true });
+
             // Envía un mensaje de confirmación al cliente con un código de estado 200 (OK)
             res.status(200).send(mensaje);
         } else {
@@ -90,7 +103,64 @@ export const insertProductCart = async (req, res) => {
     }
 }
 
-// fin INSERTAR PRODUCTO EN CARRITO***********
+
+
+
+
+/*
+
+//CODIGO KARINA
+
+// inicio INSERTAR PRODUCTO EN CARRITO***********
+
+// Función asíncrona para insertar un producto en un carrito
+export const insertProductCart = async (req, res) => {
+    try {
+        // Verifica si el usuario tiene permisos de 'User'
+        if (req.user && req.user.rol === "User"|| req.user && req.user.rol === "premiun" ) {
+            // Obtiene el ID del carrito y el ID del producto desde los parámetros de la solicitud
+            const cartId = req.params.cid;
+            const productId = req.params.pid;
+            // Obtiene la cantidad del producto desde el cuerpo de la solicitud
+            const { quantity } = req.body;
+            // Busca el carrito en la base de datos por su ID
+            const cart = await cartModel.findById(cartId);
+
+            //findById(cartId);
+
+             // Verifica si el carrito fue encontrado
+             if (!cart) {
+                return res.status(404).json({ message: "Carrito no encontrado" });
+            }
+
+            // Encuentra el índice del producto en el carrito
+            const indice = cart.products.findIndex(product => product.id_prod.toString() === productId);
+            // Si el producto ya está en el carrito, actualiza la cantidad
+            //+= asegura de que se está sumando la cantidad en lugar de sobrescribirla si el producto ya está en el carrito.
+            if (indice !== -1) {
+                cart.products[indice].quantity += quantity;
+            } else {
+                // Si el producto no está en el carrito, lo añade con la cantidad especificada
+                cart.products.push({ id_prod: productId, quantity: quantity });
+            }
+ // Guarda los cambios en la base de datos
+ //const mensaje = await cart.save();
+            // Actualiza el carrito en la base de datos con los cambios realizados
+          const updatedCart = await cartModel.findByIdAndUpdate(cart._id, cart, { new: true });
+            // Envía un mensaje de confirmación al cliente con un código de estado 200 (OK)
+            res.status(200).json(updatedCart);
+        } else {
+            // Si el usuario no tiene permisos de 'User', envía un mensaje de error al cliente con un código de estado 403 (Forbidden)
+            res.status(403).json({ message: "Usuario no autorizado" });
+        }
+
+    } catch (error) {
+        // Si ocurre un error, envía un mensaje de error al cliente con un código de estado 500 (Internal Server Error)
+        res.status(500).json({ message: `Error interno del servidor al crear producto: ${error.message}` });
+    }
+}// fin INSERTAR PRODUCTO EN CARRITO***********
+
+*/
 
 
 
