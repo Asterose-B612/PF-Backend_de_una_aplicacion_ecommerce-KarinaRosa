@@ -95,7 +95,7 @@ function handleAddToCart(event) {
     const token = localStorage.getItem('token');
 
     // Obtiene el ID del carrito desde el almacenamiento local
-    const cartId = localStorage.getItem('cart_id');
+    const cartId = localStorage.getItem('cartId');
 
     // Verifica si el token de autenticación no está presente
     if (!token) {

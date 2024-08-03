@@ -25,5 +25,7 @@ function incrementCartCount() {
     updateCartCount(currentCount);
 }
 
-// Exporta la función para que pueda ser usada en otros scripts si es necesario
-export { incrementCartCount };
+
+// Si necesitas que la función esté disponible globalmente, adjunta al objeto window
+window.incrementCartCount = incrementCartCount;
+//incrementCartCount se hace accesible globalmente a través del objeto window. Esto significa que puedes llamar a incrementCartCount() desde cualquier otro script JavaScript que se cargue después de este archivo.

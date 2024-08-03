@@ -50,17 +50,23 @@ loginForm.addEventListener('submit', async (event) => {
         // Muestra la respuesta del servidor en la consola
         console.log("DATA: LOGIN: ", data);
 
+
+            // Logs adicionales para depuración
+            console.log("Token:", data.token);
+            console.log("Rol:", data.rol);
+            console.log("cartId:", data.cartId);
+
         // Verifica si ya existen el token, rol y cart_id en localStorage para no sobrescribirlos
-        if (data.token && data.rol && data.cart_id) {
+        if (data.token && data.rol && data.cartId) {
             // Guarda el token en localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('rol', data.rol);
-            localStorage.setItem('cart_id', data.cart_id);
+            localStorage.setItem('CartId', data.cartId);
 
 
 
             // Obtener el carrito después de iniciar sesión
-            const cartResponse = await fetch(`http://localhost:8000/api/cart/${data.cart_id}`, {
+            const cartResponse = await fetch(`http://localhost:8000/api/cart/${data.cartId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,7 +100,16 @@ loginForm.addEventListener('submit', async (event) => {
                     window.location.href = '../inicio/inicio.html'; // Redirige a la aplicación principal
                 }
             });
-
+        } else {
+               // Log adicional si faltan datos
+            console.log("Faltan datos: token, rol o cartId no están presentes");
+            // Si faltan algunos datos clave, mostrar error
+            Swal.fire({
+                title: 'Error!',
+                text: 'Faltan datos clave para la redirección.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
     } catch (error) {
         // Muestra un mensaje de error en la consola

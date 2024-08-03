@@ -51,7 +51,7 @@ export const login = async (req, res) => {
             email: req.user.email,
             name: req.user.name,
             rol: req.user.rol,
-            cart_id: req.user.cart_id // Asegúrate de que este campo esté correctamente asociado
+            cartId: req.user.cart_id || null // Maneja el caso en que cart_id no esté presente
         }
 
         // Envía una respuesta con un código de estado 200 (OK) indicando que el usuario se ha logueado correctamente.
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
             message: "Usuario logueado correctamente",
             token: token,// Devolver el token en la respuesta
             rol: req.user.rol, // Devolver el rol del usuario en la respuesta
-            cart_id: req.user.cart_id // Devolver el cart_id del usuario en la respuesta
+            cartId: req.user.cart_id // Devolver el cart_id del usuario en la respuesta
         });
 
 
