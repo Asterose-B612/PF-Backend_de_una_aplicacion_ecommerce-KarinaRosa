@@ -83,14 +83,14 @@ function handleQuantityChange(event) {
     const button = event.target;
     const action = button.getAttribute('data-action');
     const productId = button.getAttribute('data-id');
-    const quantityElement = document.getElementById(`quantity-${productId}`);
+    const quantityElement = document.getElementById(`quantity-${productId}`);   
     let quantity = parseInt(quantityElement.textContent);
     console.log(`Quantity for product ${productId}:`, quantity);
 
     if (action === 'increment') {
         quantity += 1;
-    } else if (action === 'decrement' && quantity > 0) {
-        quantity -= 1;
+    } else if (action === 'decrement' ) {
+        quantity = Math.max(0, quantity - 1);
     }
 
     console.log(`Updated quantity for product ${productId}:`, quantity);
@@ -101,7 +101,11 @@ function handleQuantityChange(event) {
 
 
 
+///////////////////
+
+
 /////////////////////AGREGAR AL CARRITO
+
 
 function handleAddToCart(event) {
     // Obtiene el botón que fue clickeado
