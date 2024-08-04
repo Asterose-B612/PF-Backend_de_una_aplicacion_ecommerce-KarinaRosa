@@ -61,7 +61,7 @@ loginForm.addEventListener('submit', async (event) => {
             // Guarda el token en localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('rol', data.rol);
-            localStorage.setItem('CartId', data.cartId);
+            localStorage.setItem('cartId', data.cartId);
 
 
 

@@ -8,7 +8,7 @@ function updateCartCount(count) {
 
 // Función para obtener el conteo del carrito desde el localStorage
 function getCartCount() {
-    return parseInt(localStorage.getItem('cartCount') || '0', 10);
+    return parseInt(localStorage.getItem('cartCount') || '0');
 }
 
 // Función para inicializar el contador del carrito al cargar la página
@@ -18,9 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Función para aumentar el contador del carrito y almacenar el nuevo valor
-function incrementCartCount() {
+function incrementCartCount(amount = 1) {
     let currentCount = getCartCount();
-    currentCount += 1;
+    currentCount += amount;
+    //Es una buena práctica para persistir datos simples como el conteo del carrito entre sesiones.
     localStorage.setItem('cartCount', currentCount);
     updateCartCount(currentCount);
 }
