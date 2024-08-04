@@ -66,6 +66,18 @@ export const insertProductCart = async (req, res) => {
             // Obtiene el ID del carrito y el ID del producto desde los parámetros de la solicitud
             const cartId = req.params.cid;
             const productId = req.params.pid;
+
+
+            // Validar cartId y productId
+            if (!isValidObjectId(cartId)) {
+                return res.status(400).send('ID de carrito inválido');
+            }
+            if (!isValidObjectId(productId)) {
+                return res.status(400).send('ID de producto inválido');
+            }
+
+
+
             // Obtiene la cantidad del producto desde el cuerpo de la solicitud
             const { quantity } = req.body;
             // Busca el carrito en la base de datos por su ID
@@ -79,19 +91,26 @@ export const insertProductCart = async (req, res) => {
             // Encuentra el índice del producto en el carrito
             const indice = cart.products.findIndex(product => product.id_prod == productId);
 
+            //product.id_prod.toString() == productId); El .toString
+
+
+
+
             // Si el producto ya está en el carrito, actualiza la cantidad
             if (indice !== -1) {
-                cart.products[indice].quantity = quantity;
+                cart.products[indice].quantity += quantity;
             } else {
                 // Si el producto no está en el carrito, lo añade con la cantidad especificada
                 cart.products.push({ id_prod: productId, quantity: quantity });
             }
             // Actualiza el carrito en la base de datos con los cambios realizados
             //Actualizar solo el campo products evita sobrescribir campos importantes que podrían ser necesarios para la sesión del usuario, evitando así problemas que podrían llevar a un comportamiento errático o a la eliminación de datos como el token.Impacto en el Token: Si la actualización incorrecta afecta a los datos relacionados con el usuario (como el estado de sesión), podría provocar que el usuario sea desconectado o que el token se vuelva inválido, resultando en un loop de reautenticación.
-            const mensaje = await cartModel.findByIdAndUpdate(cartId, { products: cart.products }, { new: true });
+            console.log('Cart before update:', cart);
+            const updatedCart = await cartModel.findByIdAndUpdate(cartId, { products: cart.products }, { new: true });
+            console.log('Updated Cart:', updatedCart);
 
             // Envía un mensaje de confirmación al cliente con un código de estado 200 (OK)
-            res.status(200).send(mensaje);
+            res.status(200).send(updatedCart);
         } else {
             // Si el usuario no tiene permisos de 'User', envía un mensaje de error al cliente con un código de estado 403 (Forbidden)
             res.status(403).send("Usuario no autorizado");
@@ -99,7 +118,8 @@ export const insertProductCart = async (req, res) => {
 
     } catch (error) {
         // Si ocurre un error, envía un mensaje de error al cliente con un código de estado 500 (Internal Server Error)
-        res.status(500).send(`Error interno del servidor al crear producto: ${error}`);
+        console.error('Error updating cart:', error);
+        res.status(500).send(`Error interno del servidor al actualizar carrito: ${error.message}`);
     }
 }
 

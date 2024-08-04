@@ -54,10 +54,11 @@ const PORT = 8000
 // Cors: whitelist (lista blanca de servidores que pueden acceder). 
 const corsOptions = {
   //solo las rutas que esten dentro de origin se va a poder conectar
-  origin: 'http://127.0.0.1:5500',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: true,
+  //'http://127.0.0.1:5500',
+ // methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+ // allowedHeaders: ['Content-Type', 'Authorization']
  }
 
 // Se aplica el middleware CORS con opciones personalizadas.
