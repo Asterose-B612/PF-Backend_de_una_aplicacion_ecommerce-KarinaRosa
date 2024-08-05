@@ -116,6 +116,32 @@ function handleAddToCart(event) {
     const quantity = parseInt(document.getElementById(`quantity-${productId}`).textContent);
     // Obtiene el token de autenticación del almacenamiento local
 
+    //OBTENER INFO DEL PRODUCTO
+    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const product = {
+        _id: productId,
+        title: button.parentElement.querySelector('h2').textContent,
+        description: button.parentElement.querySelector('p').textContent,
+        price: parseFloat(button.parentElement.querySelector('p').textContent.replace('Price: $', '')),
+        quantity: quantity,
+       // image: button.parentElement.querySelector('img').src
+    };
+    const existingProductIndex = cartItems.findIndex(item => item.id === productId);
+
+    if (existingProductIndex > -1) {
+        // Actualizar la cantidad del producto existente
+        cartItems[existingProductIndex].quantity += quantity;
+    } else {
+        // Agregar el nuevo producto al carrito
+        cartItems.push(product);
+    }
+    
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    incrementCartCount(quantity);
+
+
+
     console.log(`Read quantity from element:`, quantity);
     console.log(`Quantity for product DESDE ADD TO CART ${productId}:`, quantity);
 
@@ -175,7 +201,7 @@ function handleAddToCart(event) {
                 // Verifica si la respuesta de la red es exitosa
                 if (!response.ok) {
                     throw new Error('Network response was not ok'); // Lanza un error si la respuesta no es exitosa
-                }
+                 }
                 return response.json(); // Convierte la respuesta en JSON
             })
             .then(result => {
@@ -225,3 +251,5 @@ function handleAddToCart(event) {
         });
     }
 }
+
+

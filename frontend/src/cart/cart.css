@@ -91,3 +91,9 @@ main {
 .cart-summary button:hover {
     background-color: #555;
 }
+
+
+.cart-item .item-quantity {
+    width: 50px;
+    margin-right: 10px;
+}

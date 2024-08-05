@@ -58,11 +58,15 @@ cartRouter.delete('/:cid/products/:pid', async (req, res) => {
         const { cid, pid } = req.params;
         // Paso 2: Eliminar el producto del carrito en la base de datos.
         const cart = await cartModel.findById(cid);
+        console.log("Product IDs in cart:", cart.products.map(p => p.id_prod.toString()));
+        console.log("Product ID to remove:", pid);
+
         if (!cart) {
-            return res.status(404).send('Carrito no encontrado');
+            return res.status(404).send('Carrito no encontrado');            
         }
+
       // Filtrar los productos del carrito, excluyendo el producto con el ID proporcionado.
-          cart.products = cart.products.filter(product => product._id.toString() !== pid);
+          cart.products = cart.products.filter(product => product.id_prod.toString() !== pid);
         // Guarda los cambios en el carrito
         await cart.save();
         res.status(200).send("Producto eliminado del carrito correctamente");

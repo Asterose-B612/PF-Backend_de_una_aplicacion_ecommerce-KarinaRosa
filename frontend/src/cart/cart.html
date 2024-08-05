@@ -23,41 +23,27 @@
     </header>
 
     <main>
-        <section class="cart-items">
+        <section class="cart-items" id="cart-items">
             <h2>Carrito de Compras</h2>
-            <div class="cart-item">
-                <div class="item-image">
-                    <img src="product1.jpg" alt="Producto 1">
-                </div>
-                <div class="item-details">
-                    <h3>Nombre del Producto</h3>
-                    <p>Descripción corta del producto.</p>
-                    <p>Precio: $100.00</p>
-                    <input type="number" value="1" min="1">
-                    <button class="btn-remove">Eliminar</button>
-                </div>
-            </div>
-
-            <!-- Repite este bloque para cada producto en el carrito -->
-
+            <!-- El contenido del carrito se cargará dinámicamente aquí -->
         </section>
 
         <section class="cart-summary">
             <h2>Resumen del Carrito</h2>
-            <div class="summary-details">
-                <p>Subtotal: $100.00</p>
-                <p>Envío: $10.00</p>
-                <p>Total: $110.00</p>
+            <div class="summary-details" id="summary-details">
+                <!-- El resumen del carrito se cargará dinámicamente aquí -->
             </div>
-            <button class="btn-proceed">Proceder al Checkout</button>
+            <button class="btn-proceed" id="btn-proceed">Proceder al Checkout</button>
         </section>
     </main>
 
     <footer>
         <p>&copy; 2024 Gerhard. Todos los derechos reservados.</p>
     </footer>
-
+  
     <script src="./cart.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
